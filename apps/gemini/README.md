@@ -85,5 +85,5 @@ If the installer didn't auto-configure your settings (e.g. `~/.gemini/settings.j
 ## Links
 
 - [Share app](https://plan.artificialgarden.org)
-- [GitHub](https://github.com/kingkillery/plannotator)
+- [GitHub](https://github.com/kingkillery/pk-plannotator)
 - [Docs](../../README.md)

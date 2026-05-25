@@ -19,7 +19,7 @@ export const Landing: React.FC<LandingProps> = ({ onEnter }) => {
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2 text-xs">
             <a
-              href="https://github.com/kingkillery/plannotator"
+              href="https://github.com/kingkillery/pk-plannotator"
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-foreground transition-colors"
@@ -28,7 +28,7 @@ export const Landing: React.FC<LandingProps> = ({ onEnter }) => {
             </a>
             <span className="text-muted-foreground/50">|</span>
             <a
-              href="https://github.com/kingkillery/plannotator/blob/main/apps/hook/README.md"
+              href="https://github.com/kingkillery/pk-plannotator/blob/main/apps/hook/README.md"
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-foreground transition-colors"
@@ -420,7 +420,7 @@ export const Landing: React.FC<LandingProps> = ({ onEnter }) => {
           </ul>
 
           <a
-            href="https://github.com/kingkillery/plannotator"
+            href="https://github.com/kingkillery/pk-plannotator"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"

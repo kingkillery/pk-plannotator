@@ -26,7 +26,7 @@ Interactive Plan & Code Review for AI Coding Agents. Mark up and refine your pla
 </tr>
 </table>
 
-**New:** [Code Review](https://github.com/kingkillery/plannotator)
+**New:** [Code Review](https://github.com/kingkillery/pk-plannotator)
 
 
 ### Features
@@ -78,7 +78,7 @@ irm https://plan.artificialgarden.org/install.ps1 | iex
 **Then in Claude Code:**
 
 ```
-/plugin marketplace add kingkillery/plannotator
+/plugin marketplace add kingkillery/pk-plannotator
 /plugin install plannotator@plannotator
 
 # IMPORTANT: Restart Claude Code after plugin install
@@ -107,7 +107,7 @@ irm https://plan.artificialgarden.org/install.ps1 | iex
 **Then in Copilot CLI:**
 
 ```
-/plugin marketplace add kingkillery/plannotator
+/plugin marketplace add kingkillery/pk-plannotator
 /plugin install plannotator-copilot@plannotator
 ```
 

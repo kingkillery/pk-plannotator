@@ -32,7 +32,7 @@ curl -fsSL https://plan.artificialgarden.org/install.cmd -o install.cmd && insta
 In Claude Code:
 
 ```
-/plugin marketplace add kingkillery/plannotator
+/plugin marketplace add kingkillery/pk-plannotator
 /plugin install plannotator@plannotator
 ```
 

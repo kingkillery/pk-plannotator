@@ -13,7 +13,7 @@ import {
 
 describe("pr-provider platform helpers", () => {
   test("parses GitHub PR URLs including nested suffixes", () => {
-    const ref = parsePRUrl("https://github.com/kingkillery/plannotator/pull/364/files");
+    const ref = parsePRUrl("https://github.com/kingkillery/pk-plannotator/pull/364/files");
 
     expect(ref).toEqual({
       platform: "github",
@@ -88,7 +88,7 @@ describe("pr-provider platform helpers", () => {
       headBranch: "feature/github",
       baseSha: "base",
       headSha: "head",
-      url: "https://github.com/kingkillery/plannotator/pull/364",
+      url: "https://github.com/kingkillery/pk-plannotator/pull/364",
     };
 
     const gitlabMeta: PRMetadata = {
@@ -108,7 +108,7 @@ describe("pr-provider platform helpers", () => {
     expect(getPlatformLabel(githubMeta)).toBe("GitHub");
     expect(getMRLabel(githubMeta)).toBe("PR");
     expect(getMRNumberLabel(githubMeta)).toBe("#364");
-    expect(getDisplayRepo(githubMeta)).toBe("kingkillery/plannotator");
+    expect(getDisplayRepo(githubMeta)).toBe("kingkillery/pk-plannotator");
 
     expect(getPlatformLabel(gitlabMeta)).toBe("GitLab");
     expect(getMRLabel(gitlabMeta)).toBe("MR");
@@ -129,7 +129,7 @@ describe("pr-provider platform helpers", () => {
       headBranch: "feature/github",
       baseSha: "base",
       headSha: "head",
-      url: "https://github.com/kingkillery/plannotator/pull/1",
+      url: "https://github.com/kingkillery/pk-plannotator/pull/1",
     };
 
     const gitlabMeta: PRMetadata = {

@@ -98,8 +98,8 @@ Save approved plans directly to your Obsidian vault.
 ## Links
 
 - [Share app](https://plan.artificialgarden.org)
-- [GitHub](https://github.com/kingkillery/plannotator)
-- [Claude Code Plugin](https://github.com/kingkillery/plannotator/tree/main/apps/hook)
+- [GitHub](https://github.com/kingkillery/pk-plannotator)
+- [Claude Code Plugin](https://github.com/kingkillery/pk-plannotator/tree/main/apps/hook)
 
 ## License
 

@@ -8,11 +8,11 @@
   "homepage": "https://plan.artificialgarden.org",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kingkillery/plannotator.git",
+    "url": "git+https://github.com/kingkillery/pk-plannotator.git",
     "directory": "apps/vscode-extension"
   },
   "bugs": {
-    "url": "https://github.com/kingkillery/plannotator/issues"
+    "url": "https://github.com/kingkillery/pk-plannotator/issues"
   },
   "icon": "images/icon.png",
   "galleryBanner": {

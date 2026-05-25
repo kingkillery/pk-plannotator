@@ -57,5 +57,5 @@ The message opens in the annotation UI where you can highlight text, add comment
 ## Links
 
 - [Share app](https://plan.artificialgarden.org)
-- [GitHub](https://github.com/kingkillery/plannotator)
+- [GitHub](https://github.com/kingkillery/pk-plannotator)
 - [Docs](../../README.md)

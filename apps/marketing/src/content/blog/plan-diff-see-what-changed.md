@@ -14,7 +14,7 @@ tags: ["plan-diff", "plan-mode", "version-history"]
 
 ## The problem
 
-You're reviewing a plan after instructing the agent to revise it. You have no idea what actually changed. With long plans, you're re-reading the whole thing. This was one of the most [requested features](https://github.com/kingkillery/plannotator/issues/138) from the community — a way to skip the guesswork and go straight to what's different.
+You're reviewing a plan after instructing the agent to revise it. You have no idea what actually changed. With long plans, you're re-reading the whole thing. This was one of the most [requested features](https://github.com/kingkillery/pk-plannotator/issues/138) from the community — a way to skip the guesswork and go straight to what's different.
 
 ## How it works
 
@@ -44,7 +44,7 @@ Plan Diff is available across all three supported agents: Claude Code, OpenCode,
 
 ## This is v1
 
-This is the first release of Plan Diff. The version matching relies on plan headings and dates to group iterations together, which works well for typical workflows but may have rough edges with unusual plan titles or long-running sessions. If something feels off (wrong versions being compared, diffs not appearing when expected), [open an issue](https://github.com/kingkillery/plannotator/issues). This feature was built directly from community requests ([#138](https://github.com/kingkillery/plannotator/issues/138), [#111](https://github.com/kingkillery/plannotator/issues/111)), and feedback will shape where it goes next.
+This is the first release of Plan Diff. The version matching relies on plan headings and dates to group iterations together, which works well for typical workflows but may have rough edges with unusual plan titles or long-running sessions. If something feels off (wrong versions being compared, diffs not appearing when expected), [open an issue](https://github.com/kingkillery/pk-plannotator/issues). This feature was built directly from community requests ([#138](https://github.com/kingkillery/pk-plannotator/issues/138), [#111](https://github.com/kingkillery/pk-plannotator/issues/111)), and feedback will shape where it goes next.
 
 ## Try it
 

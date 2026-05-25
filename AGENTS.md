@@ -84,7 +84,7 @@ When adding or modifying server endpoints, both implementations must be updated.
 **Via plugin marketplace** (when repo is public):
 
 ```
-/plugin marketplace add kingkillery/plannotator
+/plugin marketplace add kingkillery/pk-plannotator
 ```
 
 **Local testing:**

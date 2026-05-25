@@ -3,7 +3,7 @@ set -e
 
 INSTALL_BASE_URL="https://plan.artificialgarden.org"
 VERSION="0.19.22-pk.1"
-SKILLS_REPO="kingkillery/plannotator"
+SKILLS_REPO="kingkillery/pk-plannotator"
 INSTALL_DIR="$HOME/.local/bin"
 
 if ! command -v bun >/dev/null 2>&1; then
@@ -373,7 +373,7 @@ echo "  CLAUDE CODE USERS: YOU'RE ALL SET!"
 echo "=========================================="
 echo ""
 echo "Install the Claude Code plugin:"
-echo "  /plugin marketplace add kingkillery/plannotator"
+echo "  /plugin marketplace add kingkillery/pk-plannotator"
 echo "  /plugin install plannotator@plannotator"
 echo ""
 echo "The /plannotator-review, /plannotator-annotate, and /plannotator-last commands are ready to use after you restart Claude Code!"

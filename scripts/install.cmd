@@ -343,7 +343,7 @@ echo Test the install:
 echo   echo {"tool_input":{"plan":"# Test Plan\\n\\nHello world"}} ^| plannotator
 echo.
 echo Then install the Claude Code plugin:
-echo   /plugin marketplace add kingkillery/plannotator
+echo   /plugin marketplace add kingkillery/pk-plannotator
 echo   /plugin install plannotator@plannotator
 echo.
 echo The /plannotator-review, /plannotator-annotate, and /plannotator-last commands are ready to use!

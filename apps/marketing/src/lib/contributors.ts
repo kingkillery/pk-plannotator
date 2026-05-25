@@ -54,7 +54,7 @@ export async function getContributors(): Promise<Person[]> {
         }
       }
     } else {
-      const res = await fetch('https://api.github.com/repos/kingkillery/plannotator/contributors?per_page=50', {
+      const res = await fetch('https://api.github.com/repos/kingkillery/pk-plannotator/contributors?per_page=50', {
         headers: { 'Accept': 'application/vnd.github.v3+json' },
       });
       if (res.ok) {

@@ -48,7 +48,7 @@ import AnnoReplace from './AnnoReplace.astro';
           class="agent-btn"
           data-agent="codex"
           data-command="curl -fsSL https://plan.artificialgarden.org/install.sh | bash"
-          data-video="https://github.com/kingkillery/plannotator"
+          data-video="https://github.com/kingkillery/pk-plannotator"
         >
           <img src="/assets/icon-codex.png" alt="" class="w-4 h-4 rounded-sm" />
           <span>Codex</span>
@@ -194,7 +194,7 @@ import AnnoReplace from './AnnoReplace.astro';
     var agents = {
       claude: {
         steps: [
-          '/plugin marketplace add kingkillery/plannotator',
+          '/plugin marketplace add kingkillery/pk-plannotator',
           '/plugin install plannotator@plannotator',
           'Restart Claude Code to activate hooks'
         ],
@@ -217,7 +217,7 @@ import AnnoReplace from './AnnoReplace.astro';
       },
       copilot: {
         steps: [
-          '/plugin marketplace add kingkillery/plannotator',
+          '/plugin marketplace add kingkillery/pk-plannotator',
           '/plugin install plannotator-copilot@plannotator',
           'Restart Copilot CLI to activate hooks'
         ],
@@ -237,7 +237,7 @@ import AnnoReplace from './AnnoReplace.astro';
       vscode: {
         detail: 'Then install the VS Code extension for an integrated experience:',
         steps: [
-          '/plugin marketplace add kingkillery/plannotator',
+          '/plugin marketplace add kingkillery/pk-plannotator',
           'Restart Claude Code to activate hooks'
         ],
         link: {

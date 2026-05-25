@@ -37,7 +37,7 @@ The install script respects `CLAUDE_CONFIG_DIR` if set, placing hooks in your cu
 ### Plugin marketplace (recommended)
 
 ```
-/plugin marketplace add kingkillery/plannotator
+/plugin marketplace add kingkillery/pk-plannotator
 /plugin install plannotator@plannotator
 ```
 

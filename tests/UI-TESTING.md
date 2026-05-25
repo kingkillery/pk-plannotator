@@ -23,7 +23,7 @@ steps to ensure your changes work correctly.
 ### Installation
 
 ```bash
-git clone https://github.com/kingkillery/plannotator.git
+git clone https://github.com/kingkillery/pk-plannotator.git
 cd plannotator
 bun install
 ```

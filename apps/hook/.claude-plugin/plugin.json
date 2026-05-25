@@ -5,6 +5,6 @@
   "author": {
     "name": "kingkillery"
   },
-  "repository": "https://github.com/kingkillery/plannotator",
+  "repository": "https://github.com/kingkillery/pk-plannotator",
   "keywords": ["planning", "review", "hooks", "ExitPlanMode", "collaboration"]
 }

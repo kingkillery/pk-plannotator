@@ -21,7 +21,7 @@ irm https://plan.artificialgarden.org/install.ps1 | iex
 **Then in Copilot CLI:**
 
 ```
-/plugin marketplace add kingkillery/plannotator
+/plugin marketplace add kingkillery/pk-plannotator
 /plugin install plannotator-copilot@plannotator
 ```
 
@@ -65,5 +65,5 @@ When you use plan mode in Copilot CLI:
 ## Links
 
 - [Share app](https://plan.artificialgarden.org)
-- [GitHub](https://github.com/kingkillery/plannotator)
+- [GitHub](https://github.com/kingkillery/pk-plannotator)
 - [Docs](../../README.md)
