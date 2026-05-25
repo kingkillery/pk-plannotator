@@ -7,8 +7,8 @@ const PI_INSTALL_COMMAND = 'pi install npm:@plannotator/pi-extension';
 
 function getInstallCommand(isWSL: boolean): string {
   return isWindows && !isWSL
-    ? 'powershell -c "irm https://plannotator.ai/install.ps1 | iex"'
-    : 'curl -fsSL https://plannotator.ai/install.sh | bash';
+    ? 'powershell -c "irm https://plan.artificialgarden.org/install.ps1 | iex"'
+    : 'curl -fsSL https://plan.artificialgarden.org/install.sh | bash';
 }
 
 interface UpdateBannerProps {

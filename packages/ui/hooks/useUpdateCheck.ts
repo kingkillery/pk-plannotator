@@ -15,7 +15,7 @@ interface UpdateInfo {
   featureHighlight?: FeatureHighlight;
 }
 
-const GITHUB_API = 'https://api.github.com/repos/backnotprop/plannotator/releases/latest';
+const GITHUB_API = 'https://api.github.com/repos/kingkillery/plannotator/releases/latest';
 
 // Feature highlights for milestone releases
 const FEATURE_HIGHLIGHTS: Record<string, FeatureHighlight> = {
@@ -49,6 +49,8 @@ export function useUpdateCheck(): UpdateInfo | null {
           ? __APP_VERSION__
           : '0.0.0';
 
+        if (currentVersion.includes('-pk')) return;
+
         // Debug: ?preview-update=0.5.0 simulates an update to that version
         const urlParams = new URLSearchParams(window.location.search);
         const previewVersion = urlParams.get('preview-update');
@@ -59,7 +61,7 @@ export function useUpdateCheck(): UpdateInfo | null {
             currentVersion,
             latestVersion: previewVersion,
             updateAvailable: true,
-            releaseUrl: `https://github.com/backnotprop/plannotator/releases/tag/v${cleanPreview}`,
+            releaseUrl: `https://github.com/kingkillery/plannotator/releases/tag/v${cleanPreview}`,
             featureHighlight: FEATURE_HIGHLIGHTS[cleanPreview],
           });
           return;

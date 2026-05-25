@@ -29,7 +29,15 @@ function decompress(b64: string): unknown {
   return JSON.parse(new TextDecoder().decode(decompressed));
 }
 
-const PASTE_API = "https://plannotator-paste.plannotator.workers.dev";
+const PASTE_API = process.env.PLANNOTATOR_PASTE_URL;
+const describeLivePaste = PASTE_API ? describe : describe.skip;
+
+function requirePasteApi(): string {
+  if (!PASTE_API) {
+    throw new Error("PLANNOTATOR_PASTE_URL is required for live paste service tests");
+  }
+  return PASTE_API;
+}
 
 // Realistic plan payload matching SharePayload shape
 const SAMPLE_PAYLOAD = {
@@ -108,8 +116,10 @@ describe("full pipeline: compress → encrypt → decrypt → decompress", () =>
 
 // --- Integration tests (hit live paste service) ---
 
-describe("live paste service E2E", () => {
+describeLivePaste("live paste service E2E", () => {
   test("encrypt → POST → GET → decrypt → decompress", async () => {
+    const pasteApi = requirePasteApi();
+
     // 1. Compress
     const compressed = await compress(SAMPLE_PAYLOAD);
 
@@ -117,7 +127,7 @@ describe("live paste service E2E", () => {
     const { ciphertext, key } = await encrypt(compressed);
 
     // 3. Store — server sees only ciphertext
-    const postRes = await fetch(`${PASTE_API}/api/paste`, {
+    const postRes = await fetch(`${pasteApi}/api/paste`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ data: ciphertext }),
@@ -127,7 +137,7 @@ describe("live paste service E2E", () => {
     expect(id).toMatch(/^[A-Za-z0-9]{8}$/);
 
     // 4. Retrieve
-    const getRes = await fetch(`${PASTE_API}/api/paste/${id}`);
+    const getRes = await fetch(`${pasteApi}/api/paste/${id}`);
     expect(getRes.status).toBe(200);
 
     // Verify Cache-Control header
@@ -148,17 +158,18 @@ describe("live paste service E2E", () => {
   });
 
   test("GET without key returns opaque ciphertext", async () => {
+    const pasteApi = requirePasteApi();
     const compressed = await compress({ p: "secret plan", a: [] });
     const { ciphertext } = await encrypt(compressed);
 
-    const postRes = await fetch(`${PASTE_API}/api/paste`, {
+    const postRes = await fetch(`${pasteApi}/api/paste`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ data: ciphertext }),
     });
     const { id } = (await postRes.json()) as { id: string };
 
-    const getRes = await fetch(`${PASTE_API}/api/paste/${id}`);
+    const getRes = await fetch(`${pasteApi}/api/paste/${id}`);
     const { data } = (await getRes.json()) as { data: string };
 
     // Data is opaque — cannot be decompressed without decryption
@@ -166,7 +177,8 @@ describe("live paste service E2E", () => {
   });
 
   test("expired/nonexistent paste returns 404", async () => {
-    const res = await fetch(`${PASTE_API}/api/paste/ZZZZZZZZ`);
+    const pasteApi = requirePasteApi();
+    const res = await fetch(`${pasteApi}/api/paste/ZZZZZZZZ`);
     expect(res.status).toBe(404);
   });
 });

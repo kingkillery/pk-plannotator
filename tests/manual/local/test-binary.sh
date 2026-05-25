@@ -6,7 +6,7 @@
 #
 # Prerequisites:
 #   plannotator binary must be installed and on PATH
-#   (via: curl -fsSL https://plannotator.ai/install.sh | bash)
+#   (via: curl -fsSL https://plan.artificialgarden.org/install.sh | bash)
 #
 # What it does:
 #   1. Verifies plannotator is on PATH
@@ -24,7 +24,7 @@ if ! command -v plannotator &> /dev/null; then
     echo "Error: plannotator not found on PATH"
     echo ""
     echo "Install it with:"
-    echo "  curl -fsSL https://plannotator.ai/install.sh | bash"
+    echo "  curl -fsSL https://plan.artificialgarden.org/install.sh | bash"
     echo ""
     echo "Or add ~/.local/bin to your PATH:"
     echo "  export PATH=\"\$HOME/.local/bin:\$PATH\""

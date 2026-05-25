@@ -1,23 +1,17 @@
 #!/bin/bash
 set -e
 
-REPO="backnotprop/plannotator"
+INSTALL_BASE_URL="https://plan.artificialgarden.org"
+VERSION="0.19.22-pk.1"
+SKILLS_REPO="kingkillery/plannotator"
 INSTALL_DIR="$HOME/.local/bin"
 
-case "$(uname -s)" in
-    Darwin) os="darwin" ;;
-    Linux)  os="linux" ;;
-    *)      echo "Unsupported OS. For Windows, run: irm https://plannotator.ai/install.ps1 | iex" >&2; exit 1 ;;
-esac
+if ! command -v bun >/dev/null 2>&1; then
+    echo "bun is required for the pk-plannotator installer. Install bun first, then rerun this installer." >&2
+    exit 1
+fi
 
-case "$(uname -m)" in
-    x86_64|amd64)   arch="x64" ;;
-    arm64|aarch64)  arch="arm64" ;;
-    *)              echo "Unsupported architecture: $(uname -m)" >&2; exit 1 ;;
-esac
-
-platform="${os}-${arch}"
-binary_name="plannotator-${platform}"
+bundle_name="pk-plannotator-bun.js"
 
 # Clean up old Windows install locations (for users running bash on Windows)
 if [ -n "$USERPROFILE" ]; then
@@ -27,23 +21,16 @@ if [ -n "$USERPROFILE" ]; then
     echo "Cleaned up old Windows install locations"
 fi
 
-echo "Fetching latest version..."
-latest_tag=$(curl -fsSL "https://api.github.com/repos/${REPO}/releases/latest" | grep '"tag_name"' | cut -d'"' -f4)
+latest_tag="${VERSION}"
+echo "Installing pk-plannotator ${latest_tag}..."
 
-if [ -z "$latest_tag" ]; then
-    echo "Failed to fetch latest version" >&2
-    exit 1
-fi
-
-echo "Installing plannotator ${latest_tag}..."
-
-binary_url="https://github.com/${REPO}/releases/download/${latest_tag}/${binary_name}"
-checksum_url="${binary_url}.sha256"
+bundle_url="${INSTALL_BASE_URL}/download/${bundle_name}"
+checksum_url="${bundle_url}.sha256"
 
 mkdir -p "$INSTALL_DIR"
 
 tmp_file=$(mktemp)
-curl -fsSL -o "$tmp_file" "$binary_url"
+curl -fsSL -o "$tmp_file" "$bundle_url"
 
 expected_checksum=$(curl -fsSL "$checksum_url" | cut -d' ' -f1)
 
@@ -60,13 +47,20 @@ if [ "$actual_checksum" != "$expected_checksum" ]; then
 fi
 
 # Remove old binary first (handles Windows .exe and locked file issues)
-rm -f "$INSTALL_DIR/plannotator" "$INSTALL_DIR/plannotator.exe" 2>/dev/null || true
+rm -f "$INSTALL_DIR/plannotator" "$INSTALL_DIR/plannotator.exe" "$INSTALL_DIR/pk-plannotator" "$INSTALL_DIR/pk-plannotator.exe" 2>/dev/null || true
 
-mv "$tmp_file" "$INSTALL_DIR/plannotator"
-chmod +x "$INSTALL_DIR/plannotator"
+mv "$tmp_file" "$INSTALL_DIR/pk-plannotator.js"
+cat > "$INSTALL_DIR/pk-plannotator" << 'SHIM_EOF'
+#!/bin/sh
+DIR="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
+exec bun "$DIR/pk-plannotator.js" "$@"
+SHIM_EOF
+chmod +x "$INSTALL_DIR/pk-plannotator"
+ln "$INSTALL_DIR/pk-plannotator" "$INSTALL_DIR/plannotator" 2>/dev/null || cp "$INSTALL_DIR/pk-plannotator" "$INSTALL_DIR/plannotator"
 
 echo ""
-echo "plannotator ${latest_tag} installed to ${INSTALL_DIR}/plannotator"
+echo "pk-plannotator ${latest_tag} installed to ${INSTALL_DIR}/pk-plannotator.js"
+echo "plannotator resolves to ${INSTALL_DIR}/plannotator"
 
 if ! echo "$PATH" | tr ':' '\n' | grep -qx "$INSTALL_DIR"; then
     echo ""
@@ -220,7 +214,7 @@ if command -v git &>/dev/null; then
     skills_tmp=$(mktemp -d)
 
     if git clone --depth 1 --filter=blob:none --sparse \
-        "https://github.com/${REPO}.git" --branch "$latest_tag" "$skills_tmp/repo" 2>/dev/null && \
+        "https://github.com/${SKILLS_REPO}.git" "$skills_tmp/repo" 2>/dev/null && \
         cd "$skills_tmp/repo" && git sparse-checkout set apps/skills 2>/dev/null; then
 
         if [ -d "apps/skills" ] && [ "$(ls -A apps/skills 2>/dev/null)" ]; then
@@ -379,7 +373,7 @@ echo "  CLAUDE CODE USERS: YOU'RE ALL SET!"
 echo "=========================================="
 echo ""
 echo "Install the Claude Code plugin:"
-echo "  /plugin marketplace add backnotprop/plannotator"
+echo "  /plugin marketplace add kingkillery/plannotator"
 echo "  /plugin install plannotator@plannotator"
 echo ""
 echo "The /plannotator-review, /plannotator-annotate, and /plannotator-last commands are ready to use after you restart Claude Code!"

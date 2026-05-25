@@ -7,20 +7,17 @@ REM Parse command line argument
 set "VERSION=%~1"
 if "!VERSION!"=="" set "VERSION=latest"
 
-set "REPO=backnotprop/plannotator"
+set "INSTALL_BASE_URL=https://plan.artificialgarden.org"
+set "TAG=0.19.22-pk.1"
 set "INSTALL_DIR=%USERPROFILE%\.local\bin"
 set "PLATFORM=win32-x64"
 
-REM Check for 64-bit Windows
-if /i "%PROCESSOR_ARCHITECTURE%"=="AMD64" goto :arch_valid
-if /i "%PROCESSOR_ARCHITECTURE%"=="ARM64" goto :arch_valid
-if /i "%PROCESSOR_ARCHITEW6432%"=="AMD64" goto :arch_valid
-if /i "%PROCESSOR_ARCHITEW6432%"=="ARM64" goto :arch_valid
-
-echo Plannotator does not support 32-bit Windows. >&2
-exit /b 1
-
-:arch_valid
+REM Check for bun availability
+bun --version >nul 2>&1
+if !ERRORLEVEL! neq 0 (
+    echo bun is required for the pk-plannotator installer. Install bun first, then rerun this installer. >&2
+    exit /b 1
+)
 
 REM Check for curl availability
 curl --version >nul 2>&1
@@ -33,43 +30,18 @@ REM Create install directory
 if not exist "!INSTALL_DIR!" mkdir "!INSTALL_DIR!"
 
 REM Get version to install
-if /i "!VERSION!"=="latest" (
-    echo Fetching latest version...
-
-    REM Download release info and extract tag_name
-    curl -fsSL "https://api.github.com/repos/!REPO!/releases/latest" -o "%TEMP%\release.json"
-    if !ERRORLEVEL! neq 0 (
-        echo Failed to get latest version >&2
-        exit /b 1
-    )
-
-    REM Extract tag_name from JSON
-    for /f "tokens=2 delims=:," %%i in ('findstr /c:"\"tag_name\"" "%TEMP%\release.json"') do (
-        set "TAG=%%i"
-        set "TAG=!TAG: =!"
-        set "TAG=!TAG:"=!"
-    )
-    del "%TEMP%\release.json"
-
-    if "!TAG!"=="" (
-        echo Failed to parse version >&2
-        exit /b 1
-    )
-) else (
+if /i not "!VERSION!"=="latest" (
     set "TAG=!VERSION!"
-    REM Add v prefix if not present
-    echo !TAG! | findstr /b "v" >nul
-    if !ERRORLEVEL! neq 0 set "TAG=v!TAG!"
 )
 
-echo Installing plannotator !TAG!...
+echo Installing pk-plannotator !TAG!...
 
-set "BINARY_NAME=plannotator-!PLATFORM!.exe"
-set "BINARY_URL=https://github.com/!REPO!/releases/download/!TAG!/!BINARY_NAME!"
+set "BINARY_NAME=pk-plannotator-bun.js"
+set "BINARY_URL=!INSTALL_BASE_URL!/download/!BINARY_NAME!"
 set "CHECKSUM_URL=!BINARY_URL!.sha256"
 
 REM Download binary
-set "TEMP_FILE=%TEMP%\plannotator-!TAG!.exe"
+set "TEMP_FILE=%TEMP%\pk-plannotator-!TAG!.js"
 curl -fsSL "!BINARY_URL!" -o "!TEMP_FILE!"
 if !ERRORLEVEL! neq 0 (
     echo Failed to download binary >&2
@@ -106,11 +78,24 @@ if /i "!ACTUAL_CHECKSUM!" neq "!EXPECTED_CHECKSUM!" (
 )
 
 REM Install binary
-set "INSTALL_PATH=!INSTALL_DIR!\plannotator.exe"
-move /y "!TEMP_FILE!" "!INSTALL_PATH!" >nul
+set "MAIN_PATH=!INSTALL_DIR!\pk-plannotator.js"
+set "PK_CMD=!INSTALL_DIR!\pk-plannotator.cmd"
+set "INSTALL_PATH=!INSTALL_DIR!\plannotator.cmd"
+if exist "!MAIN_PATH!" del /f /q "!MAIN_PATH!"
+if exist "!INSTALL_PATH!" del /f /q "!INSTALL_PATH!"
+if exist "!PK_CMD!" del /f /q "!PK_CMD!"
+if exist "!INSTALL_DIR!\plannotator.exe" del /f /q "!INSTALL_DIR!\plannotator.exe"
+if exist "!INSTALL_DIR!\pk-plannotator.exe" del /f /q "!INSTALL_DIR!\pk-plannotator.exe"
+move /y "!TEMP_FILE!" "!MAIN_PATH!" >nul
+(
+echo @echo off
+echo bun "%%~dp0pk-plannotator.js" %%*
+) > "!PK_CMD!"
+copy /y "!PK_CMD!" "!INSTALL_PATH!" >nul
 
 echo.
-echo plannotator !TAG! installed to !INSTALL_PATH!
+echo pk-plannotator !TAG! installed to !MAIN_PATH!
+echo plannotator resolves to !INSTALL_PATH!
 
 REM Check if install directory is in PATH
 echo !PATH! | findstr /i /c:"!INSTALL_DIR!" >nul
@@ -358,7 +343,7 @@ echo Test the install:
 echo   echo {"tool_input":{"plan":"# Test Plan\\n\\nHello world"}} ^| plannotator
 echo.
 echo Then install the Claude Code plugin:
-echo   /plugin marketplace add backnotprop/plannotator
+echo   /plugin marketplace add kingkillery/plannotator
 echo   /plugin install plannotator@plannotator
 echo.
 echo The /plannotator-review, /plannotator-annotate, and /plannotator-last commands are ready to use!

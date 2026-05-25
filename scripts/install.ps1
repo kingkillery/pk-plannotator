@@ -1,24 +1,24 @@
 # Plannotator Windows Installer
 $ErrorActionPreference = "Stop"
 
-$repo = "backnotprop/plannotator"
+$installBaseUrl = "https://plan.artificialgarden.org"
+$latestTag = "0.19.22-pk.1"
+$skillsRepo = "kingkillery/plannotator"
 $installDir = "$env:LOCALAPPDATA\plannotator"
 
-# Detect architecture
-$arch = if ([Environment]::Is64BitOperatingSystem) {
-    if ($env:PROCESSOR_ARCHITECTURE -eq "ARM64") { "arm64" } else { "x64" }
-} else {
-    Write-Error "32-bit Windows is not supported"
+$bundleName = "pk-plannotator-bun.js"
+
+if (-not (Get-Command bun -ErrorAction SilentlyContinue)) {
+    Write-Error "bun is required for the pk-plannotator installer. Install bun first, then rerun this installer."
     exit 1
 }
-
-$platform = "win32-$arch"
-$binaryName = "plannotator-$platform.exe"
 
 # Clean up old install locations that may take precedence in PATH
 $oldLocations = @(
     "$env:USERPROFILE\.local\bin\plannotator.exe",
-    "$env:USERPROFILE\.local\bin\plannotator"
+    "$env:USERPROFILE\.local\bin\plannotator",
+    "$env:USERPROFILE\.local\bin\pk-plannotator.exe",
+    "$env:USERPROFILE\.local\bin\pk-plannotator"
 )
 
 foreach ($oldPath in $oldLocations) {
@@ -28,18 +28,9 @@ foreach ($oldPath in $oldLocations) {
     }
 }
 
-Write-Host "Fetching latest version..."
-$release = Invoke-RestMethod -Uri "https://api.github.com/repos/$repo/releases/latest"
-$latestTag = $release.tag_name
+Write-Host "Installing pk-plannotator $latestTag..."
 
-if (-not $latestTag) {
-    Write-Error "Failed to fetch latest version"
-    exit 1
-}
-
-Write-Host "Installing plannotator $latestTag..."
-
-$binaryUrl = "https://github.com/$repo/releases/download/$latestTag/$binaryName"
+$binaryUrl = "$installBaseUrl/download/$bundleName"
 $checksumUrl = "$binaryUrl.sha256"
 
 # Create install directory
@@ -68,10 +59,18 @@ if ($actualChecksum -ne $expectedChecksum) {
     exit 1
 }
 
-Move-Item -Force $tmpFile "$installDir\plannotator.exe"
+$mainFile = "$installDir\pk-plannotator.js"
+$mainCmd = "$installDir\pk-plannotator.cmd"
+$aliasCmd = "$installDir\plannotator.cmd"
+Move-Item -Force $tmpFile $mainFile
+Remove-Item -Force "$installDir\plannotator.exe", "$installDir\pk-plannotator.exe", $mainCmd, $aliasCmd -ErrorAction SilentlyContinue
+$shim = "@echo off`r`nbun `"%~dp0pk-plannotator.js`" %*`r`n"
+Set-Content -Path $mainCmd -Value $shim -NoNewline -Encoding ASCII
+Set-Content -Path $aliasCmd -Value $shim -NoNewline -Encoding ASCII
 
 Write-Host ""
-Write-Host "plannotator $latestTag installed to $installDir\plannotator.exe"
+Write-Host "pk-plannotator $latestTag installed to $mainFile"
+Write-Host "plannotator and pk-plannotator resolve through command shims in $installDir"
 
 # Add to PATH if not already there
 $userPath = [Environment]::GetEnvironmentVariable("Path", "User")
@@ -86,7 +85,7 @@ if ($userPath -notlike "*$installDir*") {
 $pluginHooks = if ($env:CLAUDE_CONFIG_DIR) { "$env:CLAUDE_CONFIG_DIR\plugins\marketplaces\plannotator\apps\hook\hooks\hooks.json" } else { "$env:USERPROFILE\.claude\plugins\marketplaces\plannotator\apps\hook\hooks\hooks.json" }
 if (Test-Path $pluginHooks) {
     # Use full path on Windows so the hook works without PATH being set in the shell
-    $exePath = "$installDir\plannotator.exe"
+    $exePath = "$installDir\plannotator.cmd"
     # Convert backslashes to forward slashes and escape for JSON
     $exePathJson = $exePath.Replace('\', '/')
     @"
@@ -225,7 +224,7 @@ if (Get-Command git -ErrorAction SilentlyContinue) {
     New-Item -ItemType Directory -Force -Path $skillsTmp | Out-Null
 
     try {
-        git clone --depth 1 --filter=blob:none --sparse "https://github.com/$repo.git" --branch $latestTag "$skillsTmp\repo" 2>$null
+        git clone --depth 1 --filter=blob:none --sparse "https://github.com/$skillsRepo.git" "$skillsTmp\repo" 2>$null
         Push-Location "$skillsTmp\repo"
         git sparse-checkout set apps/skills 2>$null
 
@@ -377,7 +376,7 @@ Write-Host "  CLAUDE CODE USERS: YOU ARE ALL SET!"
 Write-Host "=========================================="
 Write-Host ""
 Write-Host "Install the Claude Code plugin:"
-Write-Host "  /plugin marketplace add backnotprop/plannotator"
+Write-Host "  /plugin marketplace add kingkillery/plannotator"
 Write-Host "  /plugin install plannotator@plannotator"
 Write-Host ""
 Write-Host "The /plannotator-review, /plannotator-annotate, and /plannotator-last commands are ready to use after you restart Claude Code!"

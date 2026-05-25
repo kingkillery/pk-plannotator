@@ -49,7 +49,7 @@ export interface ReviewServerOptions {
   gitContext?: GitContext;
   /** Whether URL sharing is enabled (default: true) */
   sharingEnabled?: boolean;
-  /** Custom base URL for share links (default: https://share.plannotator.ai) */
+  /** Custom base URL for share links (default: https://plan.artificialgarden.org) */
   shareBaseUrl?: string;
   /** Called when server starts with the URL, remote status, and port */
   onReady?: (url: string, isRemote: boolean, port: number) => void;

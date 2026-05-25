@@ -20,7 +20,7 @@ When you share a plan:
 The share URL looks like:
 
 ```
-https://share.plannotator.ai/#eNqrVkrOz0nV...
+https://plan.artificialgarden.org/#eNqrVkrOz0nV...
 ```
 
 All data lives entirely in the URL. The share portal is a static page that reads the hash and renders it — it makes no network requests.
@@ -67,7 +67,7 @@ When a plan is too large for a URL (~2KB+ compressed), messaging apps like Slack
 2. If the URL is large, you'll see a notice: "This plan is too large for a URL"
 3. Click **Create short link** to confirm
 4. The compressed plan is temporarily stored, then automatically deleted after the configured TTL
-5. A short URL like `share.plannotator.ai/p/aBcDeFgH` is generated
+5. A short URL like `plan.artificialgarden.org/p/aBcDeFgH` is generated
 6. Both the short URL and the full hash URL are shown — the short URL is safe for messaging apps
 
 ### Privacy & encryption
@@ -82,7 +82,7 @@ When a plan is too large for a URL (~2KB+ compressed), messaging apps like Slack
 
 ## Self-hosting the share portal
 
-By default, share URLs point to `https://share.plannotator.ai`. You can self-host the portal and point Plannotator at your instance. See the [self-hosting guide](/docs/guides/self-hosting/) for details.
+By default, share URLs point to `https://plan.artificialgarden.org`. You can self-host the portal and point Plannotator at your instance. See the [self-hosting guide](/docs/guides/self-hosting/) for details.
 
 ## Privacy model
 

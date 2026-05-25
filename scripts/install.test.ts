@@ -18,7 +18,7 @@ describe("install.sh", () => {
 
   test("hooks.json heredoc is valid JSON", () => {
     // Extract the JSON between the HOOKS_EOF heredoc markers
-    const match = script.match(/cat > "\$PLUGIN_HOOKS" << 'HOOKS_EOF'\n([\s\S]*?)\nHOOKS_EOF/);
+    const match = script.match(/cat > "\$PLUGIN_HOOKS" << 'HOOKS_EOF'\r?\n([\s\S]*?)\r?\nHOOKS_EOF/);
     expect(match).toBeTruthy();
     const json = JSON.parse(match![1]);
     expect(json.hooks.PermissionRequest).toBeArray();
@@ -37,14 +37,14 @@ describe("install.sh", () => {
     expect(script).toContain("sha256sum");
   });
 
-  test("detects supported platforms", () => {
-    expect(script).toContain('Darwin) os="darwin"');
-    expect(script).toContain('Linux)  os="linux"');
+  test("requires bun runtime", () => {
+    expect(script).toContain("command -v bun");
+    expect(script).toContain("bun is required");
   });
 
-  test("detects supported architectures", () => {
-    expect(script).toContain('x86_64|amd64)   arch="x64"');
-    expect(script).toContain('arm64|aarch64)  arch="arm64"');
+  test("installs a shared bun bundle", () => {
+    expect(script).toContain("pk-plannotator-bun.js");
+    expect(script).toContain("exec bun");
   });
 
   test("warns about duplicate hooks", () => {
@@ -92,8 +92,9 @@ describe("install.ps1", () => {
     expect(script).toContain("UTF8.GetString");
   });
 
-  test("detects ARM64 architecture", () => {
-    expect(script).toContain('"ARM64"');
+  test("requires bun runtime", () => {
+    expect(script).toContain("Get-Command bun");
+    expect(script).toContain("bun is required");
   });
 
   test("adds to PATH via environment variable", () => {
@@ -143,10 +144,9 @@ describe("install.cmd", () => {
     expect(script).toContain("SHA256");
   });
 
-  test("checks for 64-bit Windows", () => {
-    expect(script).toContain("AMD64");
-    expect(script).toContain("ARM64");
-    expect(script).toContain("PROCESSOR_ARCHITEW6432"); // WoW64 detection
+  test("requires bun runtime", () => {
+    expect(script).toContain("bun --version");
+    expect(script).toContain("bun is required");
   });
 
   test("warns about duplicate hooks", () => {

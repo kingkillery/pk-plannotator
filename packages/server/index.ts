@@ -67,7 +67,7 @@ export interface ServerOptions {
   permissionMode?: string;
   /** Whether URL sharing is enabled (default: true) */
   sharingEnabled?: boolean;
-  /** Custom base URL for share links (default: https://share.plannotator.ai) */
+  /** Custom base URL for share links (default: https://plan.artificialgarden.org) */
   shareBaseUrl?: string;
   /** Base URL of the paste service API for short URL sharing */
   pasteApiUrl?: string;

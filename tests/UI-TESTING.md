@@ -23,7 +23,7 @@ steps to ensure your changes work correctly.
 ### Installation
 
 ```bash
-git clone https://github.com/backnotprop/plannotator.git
+git clone https://github.com/kingkillery/plannotator.git
 cd plannotator
 bun install
 ```
@@ -42,8 +42,8 @@ The project uses a monorepo structure:
   - `hook/` - Claude Code plugin (plan review)
   - `opencode-plugin/` - OpenCode plugin
   - `review/` - Standalone review app
-  - `portal/` - Share portal (share.plannotator.ai)
-  - `marketing/` - Marketing site (plannotator.ai)
+  - `portal/` - Share portal (plan.artificialgarden.org)
+  - `marketing/` - Marketing site
 
 ### First Build Test
 
@@ -94,10 +94,10 @@ bun run dev:hook
 bun run dev:review
 # Opens http://localhost:5174
 
-# Portal (share.plannotator.ai)
+# Portal (plan.artificialgarden.org)
 bun run dev:portal
 
-# Marketing site (plannotator.ai)
+# Marketing site
 bun run dev:marketing
 ```
 

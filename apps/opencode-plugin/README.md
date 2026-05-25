@@ -32,7 +32,7 @@ Restart OpenCode. The `submit_plan` tool is now available.
 
 > **Slash commands:** Run the install script to get `/plannotator-review`, `/plannotator-annotate`, and `/plannotator-last`:
 > ```bash
-> curl -fsSL https://plannotator.ai/install.sh | bash
+> curl -fsSL https://plan.artificialgarden.org/install.sh | bash
 > ```
 > This also clears any cached plugin versions.
 
@@ -59,7 +59,7 @@ Restart OpenCode. The `submit_plan` tool is now available.
 | `PLANNOTATOR_REMOTE` | Set to `1` for remote mode (devcontainer, SSH). Uses fixed port and skips browser open. |
 | `PLANNOTATOR_PORT` | Fixed port to use. Default: random locally, `19432` for remote sessions. |
 | `PLANNOTATOR_BROWSER` | Custom browser to open plans in. macOS: app name or path. Linux/Windows: executable path. |
-| `PLANNOTATOR_SHARE_URL` | Custom share portal URL for self-hosting. Default: `https://share.plannotator.ai`. |
+| `PLANNOTATOR_SHARE_URL` | Custom share portal URL for self-hosting. Default: `https://plan.artificialgarden.org`. |
 | `PLANNOTATOR_PLAN_TIMEOUT_SECONDS` | Timeout for `submit_plan` review wait. Default: `345600` (96h). Set `0` to disable timeout. |
 
 ## Devcontainer / Docker
@@ -97,10 +97,10 @@ Save approved plans directly to your Obsidian vault.
 
 ## Links
 
-- [Website](https://plannotator.ai)
-- [GitHub](https://github.com/backnotprop/plannotator)
-- [Claude Code Plugin](https://github.com/backnotprop/plannotator/tree/main/apps/hook)
+- [Share app](https://plan.artificialgarden.org)
+- [GitHub](https://github.com/kingkillery/plannotator)
+- [Claude Code Plugin](https://github.com/kingkillery/plannotator/tree/main/apps/hook)
 
 ## License
 
-Copyright 2025 backnotprop Licensed under [MIT](../../LICENSE-MIT) or [Apache-2.0](../../LICENSE-APACHE).
+Copyright 2025 kingkillery Licensed under [MIT](../../LICENSE-MIT) or [Apache-2.0](../../LICENSE-APACHE).

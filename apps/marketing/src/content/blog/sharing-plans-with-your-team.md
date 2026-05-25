@@ -2,7 +2,7 @@
 title: "Sharing Plans With Your Team"
 description: "How Plannotator's URL-based sharing lets teammates review and annotate agent plans together — with zero backend, zero accounts, and full privacy."
 date: 2026-02-18
-author: "backnotprop"
+author: "kingkillery"
 tags: ["sharing", "collaboration", "privacy"]
 ---
 
@@ -27,7 +27,7 @@ When Claude calls `ExitPlanMode`, Plannotator's hook intercepts it. Instead of a
 You click **Export → Share → Copy Link**. Plannotator compresses the plan markdown and any annotations you've made into a URL hash fragment. The resulting link looks something like:
 
 ```
-https://share.plannotator.ai/#eNqrVkrOz0nV...
+https://plan.artificialgarden.org/#eNqrVkrOz0nV...
 ```
 
 You paste this in Slack and send it to your senior teammate.
@@ -103,7 +103,7 @@ The sharing system uses no backend. Here's what actually happens when you click 
 3. The compressed bytes are base64url-encoded
 4. The result becomes the URL's hash fragment (the part after `#`)
 
-The hash fragment of a URL is never sent to a server in HTTP requests — that's part of the HTTP specification. The share portal at `share.plannotator.ai` is a static page. It serves the UI, then the browser reads and decompresses the hash client-side. The server sees nothing.
+The hash fragment of a URL is never sent to a server in HTTP requests — that's part of the HTTP specification. The share portal at `plan.artificialgarden.org` is a static page. It serves the UI, then the browser reads and decompresses the hash client-side. The server sees nothing.
 
 This means:
 

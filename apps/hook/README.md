@@ -8,17 +8,17 @@ Install the `plannotator` command so Claude Code can use it:
 
 **macOS / Linux / WSL:**
 ```bash
-curl -fsSL https://plannotator.ai/install.sh | bash
+curl -fsSL https://plan.artificialgarden.org/install.sh | bash
 ```
 
 **Windows PowerShell:**
 ```powershell
-irm https://plannotator.ai/install.ps1 | iex
+irm https://plan.artificialgarden.org/install.ps1 | iex
 ```
 
 **Windows CMD:**
 ```cmd
-curl -fsSL https://plannotator.ai/install.cmd -o install.cmd && install.cmd && del install.cmd
+curl -fsSL https://plan.artificialgarden.org/install.cmd -o install.cmd && install.cmd && del install.cmd
 ```
 
 ---
@@ -32,7 +32,7 @@ curl -fsSL https://plannotator.ai/install.cmd -o install.cmd && install.cmd && d
 In Claude Code:
 
 ```
-/plugin marketplace add backnotprop/plannotator
+/plugin marketplace add kingkillery/plannotator
 /plugin install plannotator@plannotator
 ```
 
@@ -78,7 +78,7 @@ When Claude Code calls `ExitPlanMode`, this hook intercepts and:
 | `PLANNOTATOR_REMOTE` | Set to `1` for remote mode (devcontainer, SSH). Uses fixed port and skips browser open. |
 | `PLANNOTATOR_PORT` | Fixed port to use. Default: random locally, `19432` for remote sessions. |
 | `PLANNOTATOR_BROWSER` | Custom browser to open plans in. macOS: app name or path. Linux/Windows: executable path. |
-| `PLANNOTATOR_SHARE_URL` | Custom share portal URL for self-hosting. Default: `https://share.plannotator.ai`. |
+| `PLANNOTATOR_SHARE_URL` | Custom share portal URL for self-hosting. Default: `https://plan.artificialgarden.org`. |
 
 ## Remote / Devcontainer Usage
 

@@ -3,16 +3,16 @@
   "displayName": "Plannotator",
   "description": "Opens Plannotator plan reviews inside VS Code tabs instead of an external browser",
   "version": "0.16.5",
-  "publisher": "backnotprop",
+  "publisher": "kingkillery",
   "license": "MIT",
-  "homepage": "https://plannotator.ai",
+  "homepage": "https://plan.artificialgarden.org",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/backnotprop/plannotator.git",
+    "url": "git+https://github.com/kingkillery/plannotator.git",
     "directory": "apps/vscode-extension"
   },
   "bugs": {
-    "url": "https://github.com/backnotprop/plannotator/issues"
+    "url": "https://github.com/kingkillery/plannotator/issues"
   },
   "icon": "images/icon.png",
   "galleryBanner": {

@@ -26,7 +26,7 @@ Interactive Plan & Code Review for AI Coding Agents. Mark up and refine your pla
 </tr>
 </table>
 
-**New:** [Code Review](https://x.com/backnotprop/status/2031145299738263567?s=20)
+**New:** [Code Review](https://github.com/kingkillery/plannotator)
 
 
 ### Features
@@ -45,10 +45,10 @@ Plannotator lets you privately share plans, annotations, and feedback with colle
 
 **Small plans** are encoded entirely in the URL hash. No server involved, nothing stored anywhere.
 
-**Large plans** use a short link service with **end-to-end encryption**. Your plan is encrypted with AES-256-GCM in your browser before upload. The server stores only ciphertext it cannot read. The decryption key lives only in the URL you share. Pastes auto-delete after 7 days.
+**Large plans** can use a short link service with **end-to-end encryption** when `PLANNOTATOR_PASTE_URL` is configured. Your plan is encrypted with AES-256-GCM in your browser before upload. The server stores only ciphertext it cannot read. The decryption key lives only in the URL you share. Without a configured paste service, sharing falls back to hash-only URLs and uploads nothing.
 
 - Zero-knowledge storage, similar to [PrivateBin](https://privatebin.info/)
-- Fully open source and **self-hostable** ([see docs](https://plannotator.ai/docs/guides/sharing-and-collaboration/))
+- Fully open source and **self-hostable** ([see docs](apps/marketing/src/content/docs/guides/sharing-and-collaboration.md))
 
 ## Install
 
@@ -66,19 +66,19 @@ Plannotator lets you privately share plans, annotations, and feedback with colle
 **macOS / Linux / WSL:**
 
 ```bash
-curl -fsSL https://plannotator.ai/install.sh | bash
+curl -fsSL https://plan.artificialgarden.org/install.sh | bash
 ```
 
 **Windows PowerShell:**
 
 ```powershell
-irm https://plannotator.ai/install.ps1 | iex
+irm https://plan.artificialgarden.org/install.ps1 | iex
 ```
 
 **Then in Claude Code:**
 
 ```
-/plugin marketplace add backnotprop/plannotator
+/plugin marketplace add kingkillery/plannotator
 /plugin install plannotator@plannotator
 
 # IMPORTANT: Restart Claude Code after plugin install
@@ -95,19 +95,19 @@ See [apps/hook/README.md](apps/hook/README.md) for detailed installation instruc
 **macOS / Linux / WSL:**
 
 ```bash
-curl -fsSL https://plannotator.ai/install.sh | bash
+curl -fsSL https://plan.artificialgarden.org/install.sh | bash
 ```
 
 **Windows PowerShell:**
 
 ```powershell
-irm https://plannotator.ai/install.ps1 | iex
+irm https://plan.artificialgarden.org/install.ps1 | iex
 ```
 
 **Then in Copilot CLI:**
 
 ```
-/plugin marketplace add backnotprop/plannotator
+/plugin marketplace add kingkillery/plannotator
 /plugin install plannotator-copilot@plannotator
 ```
 
@@ -124,13 +124,13 @@ See [apps/copilot/README.md](apps/copilot/README.md) for details.
 **macOS / Linux / WSL:**
 
 ```bash
-curl -fsSL https://plannotator.ai/install.sh | bash
+curl -fsSL https://plan.artificialgarden.org/install.sh | bash
 ```
 
 **Windows PowerShell:**
 
 ```powershell
-irm https://plannotator.ai/install.ps1 | iex
+irm https://plan.artificialgarden.org/install.ps1 | iex
 ```
 
 The installer auto-detects Gemini CLI (checks for `~/.gemini`) and configures the plan review hook and policy. It also installs `/plannotator-review` and `/plannotator-annotate` slash commands.
@@ -163,12 +163,12 @@ Add to your `opencode.json`:
 **Run the install script** to get `/plannotator-review`:
 
 ```bash
-curl -fsSL https://plannotator.ai/install.sh | bash
+curl -fsSL https://plan.artificialgarden.org/install.sh | bash
 ```
 
 **Windows:**
 ```powershell
-irm https://plannotator.ai/install.ps1 | iex
+irm https://plan.artificialgarden.org/install.ps1 | iex
 ```
 
 This also clears any cached plugin versions. Then restart OpenCode.
@@ -194,13 +194,13 @@ See [apps/pi-extension/README.md](apps/pi-extension/README.md) for full usage de
 **macOS / Linux / WSL:**
 
 ```bash
-curl -fsSL https://plannotator.ai/install.sh | bash
+curl -fsSL https://plan.artificialgarden.org/install.sh | bash
 ```
 
 **Windows PowerShell:**
 
 ```powershell
-irm https://plannotator.ai/install.ps1 | iex
+irm https://plan.artificialgarden.org/install.ps1 | iex
 ```
 
 **Then in Codex — feedback flows back into the agent loop automatically:**
@@ -233,7 +233,7 @@ When your AI agent finishes planning, Plannotator:
 
 ## License
 
-Copyright 2025-2026 backnotprop
+Copyright 2025-2026 kingkillery
 
 This project is licensed under either of
 

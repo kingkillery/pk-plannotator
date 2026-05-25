@@ -1,0 +1,42 @@
+{
+  "name": "pk-plannotator",
+  "version": "0.19.22-pk.1",
+  "description": "Private pk build of Plannotator CLI with plan.artificialgarden.org sharing defaults",
+  "license": "MIT OR Apache-2.0",
+  "author": "kingkillery",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kingkillery/plannotator.git",
+    "directory": "packages/npm-cli"
+  },
+  "homepage": "https://plan.artificialgarden.org",
+  "bugs": {
+    "url": "https://github.com/kingkillery/plannotator/issues"
+  },
+  "keywords": [
+    "plannotator",
+    "pk-plannotator",
+    "plan-review",
+    "codex",
+    "claude-code",
+    "opencode"
+  ],
+  "bin": {
+    "pk-plannotator": "bin/pk-plannotator.js",
+    "plannotator": "bin/pk-plannotator.js"
+  },
+  "files": [
+    "bin",
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build:bundle": "bun build ../../apps/hook/server/index.ts --target=bun --outfile dist/pk-plannotator-bun.js",
+    "prepack": "bun run build:bundle"
+  },
+  "engines": {
+    "node": ">=18",
+    "bun": ">=1.0.0"
+  }
+}

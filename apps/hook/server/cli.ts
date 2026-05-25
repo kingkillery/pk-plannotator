@@ -1,5 +1,15 @@
+const PK_PLANNOTATOR_VERSION = "0.19.22-pk.1";
+
 export function isTopLevelHelpInvocation(args: string[]): boolean {
-  return args[0] === "--help";
+  return args[0] === "--help" || args[0] === "-h";
+}
+
+export function isVersionInvocation(args: string[]): boolean {
+  return args[0] === "--version" || args[0] === "-V";
+}
+
+export function formatVersion(): string {
+  return `pk-plannotator ${PK_PLANNOTATOR_VERSION}`;
 }
 
 export function isInteractiveNoArgInvocation(
@@ -13,6 +23,7 @@ export function formatTopLevelHelp(): string {
   return [
     "Usage:",
     "  plannotator --help",
+    "  plannotator --version",
     "  plannotator [--browser <name>]",
     "  plannotator review [PR_URL]",
     "  plannotator annotate <file.md | folder/>",
@@ -22,6 +33,7 @@ export function formatTopLevelHelp(): string {
     "  plannotator improve-context",
     "",
     "Note:",
+    "  this pk build defaults remote share links to https://plan.artificialgarden.org",
     "  running 'plannotator' without arguments is for hook integration and expects JSON on stdin",
   ].join("\n");
 }

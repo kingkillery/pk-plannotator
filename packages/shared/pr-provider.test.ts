@@ -13,12 +13,12 @@ import {
 
 describe("pr-provider platform helpers", () => {
   test("parses GitHub PR URLs including nested suffixes", () => {
-    const ref = parsePRUrl("https://github.com/backnotprop/plannotator/pull/364/files");
+    const ref = parsePRUrl("https://github.com/kingkillery/plannotator/pull/364/files");
 
     expect(ref).toEqual({
       platform: "github",
       host: "github.com",
-      owner: "backnotprop",
+      owner: "kingkillery",
       repo: "plannotator",
       number: 364,
     });
@@ -79,16 +79,16 @@ describe("pr-provider platform helpers", () => {
     const githubMeta: PRMetadata = {
       platform: "github",
       host: "github.com",
-      owner: "backnotprop",
+      owner: "kingkillery",
       repo: "plannotator",
       number: 364,
       title: "GitHub PR",
-      author: "backnotprop",
+      author: "kingkillery",
       baseBranch: "main",
       headBranch: "feature/github",
       baseSha: "base",
       headSha: "head",
-      url: "https://github.com/backnotprop/plannotator/pull/364",
+      url: "https://github.com/kingkillery/plannotator/pull/364",
     };
 
     const gitlabMeta: PRMetadata = {
@@ -108,7 +108,7 @@ describe("pr-provider platform helpers", () => {
     expect(getPlatformLabel(githubMeta)).toBe("GitHub");
     expect(getMRLabel(githubMeta)).toBe("PR");
     expect(getMRNumberLabel(githubMeta)).toBe("#364");
-    expect(getDisplayRepo(githubMeta)).toBe("backnotprop/plannotator");
+    expect(getDisplayRepo(githubMeta)).toBe("kingkillery/plannotator");
 
     expect(getPlatformLabel(gitlabMeta)).toBe("GitLab");
     expect(getMRLabel(gitlabMeta)).toBe("MR");
@@ -120,16 +120,16 @@ describe("pr-provider platform helpers", () => {
     const githubMeta: PRMetadata = {
       platform: "github",
       host: "github.com",
-      owner: "backnotprop",
+      owner: "kingkillery",
       repo: "plannotator",
       number: 1,
       title: "GitHub PR",
-      author: "backnotprop",
+      author: "kingkillery",
       baseBranch: "main",
       headBranch: "feature/github",
       baseSha: "base",
       headSha: "head",
-      url: "https://github.com/backnotprop/plannotator/pull/1",
+      url: "https://github.com/kingkillery/plannotator/pull/1",
     };
 
     const gitlabMeta: PRMetadata = {
@@ -152,7 +152,7 @@ describe("pr-provider platform helpers", () => {
     expect(githubRef).toEqual({
       platform: "github",
       host: "github.com",
-      owner: "backnotprop",
+      owner: "kingkillery",
       repo: "plannotator",
       number: 1,
     });

@@ -17,14 +17,14 @@ All Plannotator environment variables and their defaults.
 | `PLANNOTATOR_BROWSER` | system default | Custom browser to open the UI in. macOS: app name or path. Linux/Windows: executable path. Can also be a script. Takes priority over `BROWSER`. Also settable per-invocation with `--browser`. |
 | `BROWSER` | (none) | Standard env var for specifying a browser. VS Code sets this automatically in devcontainers. Used as fallback when `PLANNOTATOR_BROWSER` is not set. |
 | `PLANNOTATOR_SHARE` | enabled | Set to `disabled` to turn off sharing. Hides share UI and import options. |
-| `PLANNOTATOR_SHARE_URL` | `https://share.plannotator.ai` | Base URL for share links. Set this when self-hosting the share portal. |
+| `PLANNOTATOR_SHARE_URL` | `https://plan.artificialgarden.org` | Base URL for share links. Set this when self-hosting the share portal. |
 | `PLANNOTATOR_PLAN_TIMEOUT_SECONDS` | `345600` | OpenCode only. `submit_plan` wait timeout in seconds. Set `0` to disable timeout. |
 
 ## Paste service variables
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `PLANNOTATOR_PASTE_URL` | `https://plannotator-paste.plannotator.workers.dev` | Base URL of the paste service API. Set this when self-hosting the paste service. |
+| `PLANNOTATOR_PASTE_URL` | unset | Base URL of the paste service API. Leave unset to disable short-link upload and use hash-only sharing. Set this only when self-hosting or explicitly trusting a paste service. |
 
 ### Self-hosted paste service
 
@@ -36,7 +36,7 @@ When running your own paste service binary, these variables configure it:
 | `PASTE_DATA_DIR` | `~/.plannotator/pastes` | Filesystem storage directory |
 | `PASTE_TTL_DAYS` | `7` | Paste expiration in days |
 | `PASTE_MAX_SIZE` | `524288` | Max payload size in bytes (512KB) |
-| `PASTE_ALLOWED_ORIGINS` | `https://share.plannotator.ai,http://localhost:3001` | CORS allowed origins (comma-separated) |
+| `PASTE_ALLOWED_ORIGINS` | `https://plan.artificialgarden.org,http://localhost:3001` | CORS allowed origins (comma-separated) |
 
 ## Install script variables
 

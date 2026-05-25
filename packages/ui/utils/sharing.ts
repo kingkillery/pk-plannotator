@@ -212,14 +212,16 @@ export function formatUrlSize(url: string): string {
 // Short URL support (paste-service backed)
 // ---------------------------------------------------------------------------
 
-const DEFAULT_PASTE_API = 'https://plannotator-paste.plannotator.workers.dev';
-const DEFAULT_SHARE_BASE = 'https://share.plannotator.ai';
+// Short-link storage is opt-in for private/self-hosted builds. Without an
+// explicit paste API, sharing falls back to local hash-only URLs.
+const DEFAULT_PASTE_API: string | undefined = undefined;
+const DEFAULT_SHARE_BASE = 'https://plan.artificialgarden.org';
 
 /**
  * Create a short share URL by posting compressed plan data to the paste service.
  *
  * Returns `{ shortUrl, id }` on success, or `null` when the paste service is
- * unavailable (e.g. self-hosted environments without a paste backend). Callers
+ * unavailable or disabled (e.g. private environments without a paste backend). Callers
  * should fall back to the hash-based URL in that case.
  *
  * The request has a 5-second timeout so UI responsiveness is not affected.
@@ -229,7 +231,7 @@ export async function createShortShareUrl(
   annotations: Annotation[],
   globalAttachments?: ImageAttachment[],
   options?: {
-    /** Override the paste API base URL (default: https://plannotator-paste.plannotator.workers.dev) */
+    /** Paste API base URL. Omit to disable short-link upload. */
     pasteApiUrl?: string;
     /** Override the share site base URL used in the returned short link */
     shareBaseUrl?: string;
@@ -237,6 +239,11 @@ export async function createShortShareUrl(
 ): Promise<{ shortUrl: string; id: string } | null> {
   const pasteApi = options?.pasteApiUrl ?? DEFAULT_PASTE_API;
   const shareBase = options?.shareBaseUrl ?? DEFAULT_SHARE_BASE;
+
+  if (!pasteApi) {
+    console.debug('[sharing] Short URL service disabled, using hash-based sharing');
+    return null;
+  }
 
   try {
     const diffContexts = buildDiffContextArray(annotations);
@@ -287,9 +294,14 @@ export async function createShortShareUrl(
  */
 export async function loadFromPasteId(
   pasteId: string,
-  pasteApiUrl: string = DEFAULT_PASTE_API,
+  pasteApiUrl: string | undefined = DEFAULT_PASTE_API,
   encryptionKey?: string
 ): Promise<SharePayload | null> {
+  if (!pasteApiUrl) {
+    console.warn('[sharing] Paste service disabled; cannot load short URL', pasteId);
+    return null;
+  }
+
   try {
     const response = await fetch(`${pasteApiUrl}/api/paste/${pasteId}`, {
       signal: AbortSignal.timeout(10_000),

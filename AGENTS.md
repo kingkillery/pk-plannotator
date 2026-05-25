@@ -18,7 +18,7 @@ plannotator/
 │   │   ├── index.ts              # Plugin entry with submit_plan tool + review/annotate event handlers
 │   │   ├── plannotator.html      # Built plan review app
 │   │   └── review-editor.html    # Built code review app
-│   ├── marketing/                # Marketing site, docs, and blog (plannotator.ai)
+│   ├── marketing/                # Marketing site, docs, and blog
 │   │   └── astro.config.mjs      # Astro 5 static site with content collections
 │   ├── paste-service/            # Paste service for short URL sharing
 │   │   ├── core/                 # Platform-agnostic logic (handler, storage interface, cors)
@@ -31,7 +31,7 @@ plannotator/
 │   └── vscode-extension/         # VS Code extension — opens plans in editor tabs
 │       ├── bin/                   # Router scripts (open-in-vscode, xdg-open)
 │       ├── src/                   # extension.ts, cookie-proxy.ts, ipc-server.ts, panel-manager.ts, editor-annotations.ts, vscode-theme.ts
-│       └── package.json           # Extension manifest (publisher: backnotprop)
+│       └── package.json           # Extension manifest (publisher: kingkillery)
 ├── packages/
 │   ├── server/                   # Shared server implementation
 │   │   ├── index.ts              # startPlannotatorServer(), handleServerReady()
@@ -84,7 +84,7 @@ When adding or modifying server endpoints, both implementations must be updated.
 **Via plugin marketplace** (when repo is public):
 
 ```
-/plugin marketplace add backnotprop/plannotator
+/plugin marketplace add kingkillery/plannotator
 ```
 
 **Local testing:**
@@ -101,8 +101,8 @@ claude --plugin-dir ./apps/hook
 | `PLANNOTATOR_PORT` | Fixed port to use. Default: random locally, `19432` for remote sessions. |
 | `PLANNOTATOR_BROWSER` | Custom browser to open plans in. macOS: app name or path. Linux/Windows: executable path. |
 | `PLANNOTATOR_SHARE` | Set to `disabled` to turn off URL sharing entirely. Default: enabled. |
-| `PLANNOTATOR_SHARE_URL` | Custom base URL for share links (self-hosted portal). Default: `https://share.plannotator.ai`. |
-| `PLANNOTATOR_PASTE_URL` | Base URL of the paste service API for short URL sharing. Default: `https://plannotator-paste.plannotator.workers.dev`. |
+| `PLANNOTATOR_SHARE_URL` | Custom base URL for share links (self-hosted portal). Default: `https://plan.artificialgarden.org`. |
+| `PLANNOTATOR_PASTE_URL` | Base URL of the paste service API for short URL sharing. Default: unset, which disables short-link upload and uses hash-only sharing. |
 
 **Legacy:** `SSH_TTY` and `SSH_CONNECTION` are still detected. Prefer `PLANNOTATOR_REMOTE=1` for explicit control.
 
@@ -433,8 +433,8 @@ bun run dev:vscode     # VS Code extension (watch mode)
 bun run build:hook       # Single-file HTML for hook server
 bun run build:review     # Code review editor
 bun run build:opencode   # OpenCode plugin (copies HTML from hook + review)
-bun run build:portal     # Static build for share.plannotator.ai
-bun run build:marketing  # Static build for plannotator.ai
+bun run build:portal     # Static build for plan.artificialgarden.org
+bun run build:marketing  # Static build for marketing/docs
 bun run build:vscode     # VS Code extension bundle
 bun run package:vscode   # Package .vsix for marketplace
 bun run build            # Build hook + opencode (main targets)
@@ -459,7 +459,7 @@ Running only `build:opencode` will copy stale HTML files.
 
 ## Marketing Site
 
-`apps/marketing/` is the plannotator.ai website — landing page, documentation, and blog. Built with Astro 5 (static output, zero client JS except a theme toggle island). Docs are markdown files in `src/content/docs/`, blog posts in `src/content/blog/`, both using Astro content collections. Tailwind CSS v4 via `@tailwindcss/vite`. Deploys to S3/CloudFront via GitHub Actions on push to main.
+`apps/marketing/` is the website source — landing page, documentation, and blog. Built with Astro 5 (static output, zero client JS except a theme toggle island). Docs are markdown files in `src/content/docs/`, blog posts in `src/content/blog/`, both using Astro content collections. Tailwind CSS v4 via `@tailwindcss/vite`. Deploys to S3/CloudFront via GitHub Actions on push to main.
 
 ## Test plugin locally
 

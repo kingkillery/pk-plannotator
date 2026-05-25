@@ -38,7 +38,7 @@ Returns:
   "plan": "# Implementation Plan...",
   "origin": "claude-code",
   "sharingEnabled": true,
-  "shareBaseUrl": "https://share.plannotator.ai",
+  "shareBaseUrl": "https://plan.artificialgarden.org",
   "repoInfo": { "display": "my-project", "branch": "main" }
 }
 ```
@@ -153,7 +153,7 @@ Body:
 
 Stores compressed plan data for short URL sharing. Runs as a separate service from the plan/review/annotate servers.
 
-Default: `https://plannotator-paste.plannotator.workers.dev` (or self-hosted)
+Default: disabled. Set `PLANNOTATOR_PASTE_URL` to a self-hosted or explicitly trusted paste service to enable short-link upload.
 
 | Endpoint | Method | Purpose |
 |----------|--------|---------|

@@ -137,7 +137,7 @@ export const AISetupDialog: React.FC<AISetupDialogProps> = ({
           <p className="text-[10px] text-muted-foreground/70 flex-1">
             Providers are detected from installed CLI tools.
             You must be authenticated with each CLI independently.{' '}
-            <a href="https://plannotator.ai/docs/guides/ai-features/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Learn more</a>
+            <a href="https://plan.artificialgarden.org" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Learn more</a>
           </p>
           <button
             onClick={handleDone}

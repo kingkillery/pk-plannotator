@@ -1,13 +1,13 @@
 /**
  * Server-side share URL generation for remote sessions
  *
- * Generates a share.plannotator.ai URL from plan content so remote users
+ * Generates a plan.artificialgarden.org URL from plan content so remote users
  * can open the review in their local browser without port forwarding.
  */
 
 import { compress } from "@plannotator/shared/compress";
 
-const DEFAULT_SHARE_BASE = "https://share.plannotator.ai";
+const DEFAULT_SHARE_BASE = "https://plan.artificialgarden.org";
 
 /**
  * Generate a share URL from plan markdown content.

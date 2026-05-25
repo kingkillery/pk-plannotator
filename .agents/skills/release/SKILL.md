@@ -37,10 +37,10 @@ Use the GitHub API via `gh`:
 gh issue view <number> --json author,title,body
 
 # Get issue comments to find participants
-gh api repos/backnotprop/plannotator/issues/<number>/comments --jq '.[].user.login'
+gh api repos/kingkillery/plannotator/issues/<number>/comments --jq '.[].user.login'
 
 # Get PR review comments
-gh api repos/backnotprop/plannotator/pulls/<number>/comments --jq '.[].user.login'
+gh api repos/kingkillery/plannotator/pulls/<number>/comments --jq '.[].user.login'
 ```
 
 ### Step 3: Write the release notes
@@ -94,7 +94,7 @@ Write the file to the repo root as `RELEASE_NOTES_v<VERSION>.md`.
 
 8. **Full Changelog link**:
    ```
-   **Full Changelog**: https://github.com/backnotprop/plannotator/compare/<prev-tag>...<new-tag>
+   **Full Changelog**: https://github.com/kingkillery/plannotator/compare/<prev-tag>...<new-tag>
    ```
 
 #### Writing guidelines

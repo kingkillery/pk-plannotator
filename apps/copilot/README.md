@@ -9,19 +9,19 @@ Interactive plan review, code review, and markdown annotation for GitHub Copilot
 **macOS / Linux / WSL:**
 
 ```bash
-curl -fsSL https://plannotator.ai/install.sh | bash
+curl -fsSL https://plan.artificialgarden.org/install.sh | bash
 ```
 
 **Windows PowerShell:**
 
 ```powershell
-irm https://plannotator.ai/install.ps1 | iex
+irm https://plan.artificialgarden.org/install.ps1 | iex
 ```
 
 **Then in Copilot CLI:**
 
 ```
-/plugin marketplace add backnotprop/plannotator
+/plugin marketplace add kingkillery/plannotator
 /plugin install plannotator-copilot@plannotator
 ```
 
@@ -64,6 +64,6 @@ When you use plan mode in Copilot CLI:
 
 ## Links
 
-- [Website](https://plannotator.ai)
-- [GitHub](https://github.com/backnotprop/plannotator)
-- [Docs](https://plannotator.ai/docs/getting-started/installation/)
+- [Share app](https://plan.artificialgarden.org)
+- [GitHub](https://github.com/kingkillery/plannotator)
+- [Docs](../../README.md)

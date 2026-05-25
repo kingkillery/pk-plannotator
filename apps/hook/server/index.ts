@@ -81,8 +81,10 @@ import { findCopilotPlanContent, findCopilotSessionForCwd, getLastCopilotMessage
 import {
   formatInteractiveNoArgClarification,
   formatTopLevelHelp,
+  formatVersion,
   isInteractiveNoArgInvocation,
   isTopLevelHelpInvocation,
+  isVersionInvocation,
 } from "./cli";
 import path from "path";
 
@@ -107,6 +109,11 @@ if (browserIdx !== -1 && args[browserIdx + 1]) {
 
 if (isTopLevelHelpInvocation(args)) {
   console.log(formatTopLevelHelp());
+  process.exit(0);
+}
+
+if (isVersionInvocation(args)) {
+  console.log(formatVersion());
   process.exit(0);
 }
 

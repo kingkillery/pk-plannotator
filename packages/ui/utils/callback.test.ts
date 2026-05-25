@@ -10,12 +10,12 @@ function loc(url: string): { search: string; hash: string } {
 
 describe("getCallbackConfig", () => {
   test("returns null when no cb/ct params", () => {
-    expect(getCallbackConfig(loc("https://share.plannotator.ai/#abc123"))).toBeNull();
+    expect(getCallbackConfig(loc("https://plan.artificialgarden.org/#abc123"))).toBeNull();
   });
 
   test("returns config with params before #", () => {
     const result = getCallbackConfig(
-      loc("https://share.plannotator.ai/?cb=https%3A%2F%2Flocalhost%3A9456%2Fplannotator-cb&ct=tok-123#abc"),
+      loc("https://plan.artificialgarden.org/?cb=https%3A%2F%2Flocalhost%3A9456%2Fplannotator-cb&ct=tok-123#abc"),
     );
     expect(result).not.toBeNull();
     expect(result!.callbackUrl).toBe("https://localhost:9456/plannotator-cb");
@@ -24,7 +24,7 @@ describe("getCallbackConfig", () => {
 
   test("returns config with params after # fragment", () => {
     const result = getCallbackConfig(
-      loc("https://share.plannotator.ai/#abc?cb=https%3A%2F%2Flocalhost%3A9456%2Fplannotator-cb&ct=tok-456"),
+      loc("https://plan.artificialgarden.org/#abc?cb=https%3A%2F%2Flocalhost%3A9456%2Fplannotator-cb&ct=tok-456"),
     );
     expect(result).not.toBeNull();
     expect(result!.callbackUrl).toBe("https://localhost:9456/plannotator-cb");
@@ -33,49 +33,49 @@ describe("getCallbackConfig", () => {
 
   test("returns null when only cb is present", () => {
     expect(
-      getCallbackConfig(loc("https://share.plannotator.ai/?cb=https%3A%2F%2Flocalhost%3A9456%2Fcb")),
+      getCallbackConfig(loc("https://plan.artificialgarden.org/?cb=https%3A%2F%2Flocalhost%3A9456%2Fcb")),
     ).toBeNull();
   });
 
   test("returns null when only ct is present", () => {
-    expect(getCallbackConfig(loc("https://share.plannotator.ai/?ct=tok-789"))).toBeNull();
+    expect(getCallbackConfig(loc("https://plan.artificialgarden.org/?ct=tok-789"))).toBeNull();
   });
 
   test("decodes encoded callback URL", () => {
     const encoded = encodeURIComponent("https://bot.internal/plannotator-cb");
-    const result = getCallbackConfig(loc(`https://share.plannotator.ai/?cb=${encoded}&ct=tok-abc#hash`));
+    const result = getCallbackConfig(loc(`https://plan.artificialgarden.org/?cb=${encoded}&ct=tok-abc#hash`));
     expect(result!.callbackUrl).toBe("https://bot.internal/plannotator-cb");
   });
 
   test("returns null when params are empty strings", () => {
-    expect(getCallbackConfig(loc("https://share.plannotator.ai/?cb=&ct="))).toBeNull();
+    expect(getCallbackConfig(loc("https://plan.artificialgarden.org/?cb=&ct="))).toBeNull();
   });
 
   test("partial params in hash — only cb, no ct", () => {
     expect(
-      getCallbackConfig(loc("https://share.plannotator.ai/#abc?cb=https%3A%2F%2Flocalhost%3A9456%2Fcb")),
+      getCallbackConfig(loc("https://plan.artificialgarden.org/#abc?cb=https%3A%2F%2Flocalhost%3A9456%2Fcb")),
     ).toBeNull();
   });
 
   test("K8s cluster URL (http) is accepted", () => {
     const k8sUrl = "http://plannotator-cb.svc.cluster.local:9456/callback";
     const result = getCallbackConfig(
-      loc(`https://share.plannotator.ai/?cb=${encodeURIComponent(k8sUrl)}&ct=k8s-tok-xyz`),
+      loc(`https://plan.artificialgarden.org/?cb=${encodeURIComponent(k8sUrl)}&ct=k8s-tok-xyz`),
     );
     expect(result!.callbackUrl).toBe(k8sUrl);
     expect(result!.token).toBe("k8s-tok-xyz");
   });
 
   test("rejects non-http/https schemes", () => {
-    expect(getCallbackConfig(loc(`https://share.plannotator.ai/?cb=${encodeURIComponent("file:///etc/passwd")}&ct=tok`))).toBeNull();
-    expect(getCallbackConfig(loc(`https://share.plannotator.ai/?cb=${encodeURIComponent("javascript:alert(1)")}&ct=tok`))).toBeNull();
+    expect(getCallbackConfig(loc(`https://plan.artificialgarden.org/?cb=${encodeURIComponent("file:///etc/passwd")}&ct=tok`))).toBeNull();
+    expect(getCallbackConfig(loc(`https://plan.artificialgarden.org/?cb=${encodeURIComponent("javascript:alert(1)")}&ct=tok`))).toBeNull();
   });
 
   test("preserves percent-encoded chars in callback URL query params", () => {
     const presignedUrl =
       "https://s3.amazonaws.com/bucket/cb?X-Amz-Signature=abc%2Bdef%2Fghi%3D";
     const result = getCallbackConfig(
-      loc(`https://share.plannotator.ai/?cb=${encodeURIComponent(presignedUrl)}&ct=tok-presigned`),
+      loc(`https://plan.artificialgarden.org/?cb=${encodeURIComponent(presignedUrl)}&ct=tok-presigned`),
     );
     expect(result).not.toBeNull();
     expect(result!.callbackUrl).toBe(presignedUrl);
@@ -83,14 +83,14 @@ describe("getCallbackConfig", () => {
   });
 
   test("rejects malformed URL", () => {
-    expect(getCallbackConfig(loc(`https://share.plannotator.ai/?cb=not-a-url&ct=tok`))).toBeNull();
+    expect(getCallbackConfig(loc(`https://plan.artificialgarden.org/?cb=not-a-url&ct=tok`))).toBeNull();
   });
 });
 
 // --- executeCallback ---
 
 const mockConfig = { callbackUrl: "https://localhost:9456/plannotator-cb", token: "tok-test" };
-const mockAnnotatedUrl = "https://share.plannotator.ai/#abc123";
+const mockAnnotatedUrl = "https://plan.artificialgarden.org/#abc123";
 
 let originalFetch: typeof globalThis.fetch;
 beforeEach(() => { originalFetch = globalThis.fetch; });
