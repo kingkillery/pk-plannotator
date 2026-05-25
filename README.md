@@ -2,9 +2,66 @@
   <img src="apps/marketing/public/og-image.webp" alt="Plannotator" width="80%" />
 </p>
 
-# Plannotator
+# pk-plannotator
 
-Interactive Plan & Code Review for AI Coding Agents. Mark up and refine your plans or code diffs using a visual UI, share for team collaboration, and seamlessly integrate with **Claude Code**, **Copilot CLI**, **Gemini CLI**, **OpenCode**, **Pi**, and **Codex**.
+Private PK build of Plannotator for interactive plan and code review with AI coding agents. Mark up plans or code diffs in a visual UI, review revisions, and send structured feedback back to **Claude Code**, **Copilot CLI**, **Gemini CLI**, **OpenCode**, **Pi**, and **Codex**.
+
+## Quickstart
+
+### 1. Install the CLI
+
+Use npm if you already have Node and Bun installed:
+
+```bash
+npm install -g pk-plannotator
+```
+
+Or use the hosted installer:
+
+```bash
+curl -fsSL https://plan.artificialgarden.org/install.sh | bash
+```
+
+Windows PowerShell:
+
+```powershell
+irm https://plan.artificialgarden.org/install.ps1 | iex
+```
+
+### 2. Verify the command
+
+The npm package installs both command names, and both resolve to this PK build:
+
+```bash
+pk-plannotator --version
+plannotator --version
+```
+
+Both should print `pk-plannotator 0.19.22-pk.1`.
+
+### 3. Add the Claude Code plugin
+
+In Claude Code:
+
+```text
+/plugin marketplace add kingkillery/pk-plannotator
+/plugin install plannotator@plannotator
+```
+
+Restart Claude Code after installing the plugin.
+
+### 4. Start reviewing
+
+Use plan mode normally, or run one of the helper commands:
+
+```text
+/plannotator-review
+/plannotator-review <github-pr-url>
+/plannotator-annotate <file.md>
+/plannotator-last
+```
+
+Share links are hash-only by default for small plans. Large-plan upload is disabled unless you configure `PLANNOTATOR_PASTE_URL`; when configured, uploaded plans are encrypted before they leave the browser.
 
 **Plan Mode Demos:**
 <table>
