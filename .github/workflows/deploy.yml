@@ -87,6 +87,8 @@ jobs:
     if: needs.detect-changes.outputs.marketing == 'true'
     runs-on: ubuntu-latest
     environment: production
+    env:
+      AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
@@ -102,16 +104,23 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Skip deploy (missing AWS role)
+        if: env.AWS_ROLE_ARN == ''
+        run: echo "::warning::AWS_ROLE_ARN is not set; skipping marketing deploy."
+
       - name: Configure AWS credentials
+        if: env.AWS_ROLE_ARN != ''
         uses: aws-actions/configure-aws-credentials@8df5847569e6427dd6c4fb1cf565c83acfa8afa7 # v6.0.0
         with:
-          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
           aws-region: us-east-1
 
       - name: Deploy to S3
+        if: env.AWS_ROLE_ARN != ''
         run: aws s3 sync apps/marketing/dist/ s3://plannotator-marketing/ --delete
 
       - name: Invalidate CloudFront
+        if: env.AWS_ROLE_ARN != ''
         run: |
           aws cloudfront create-invalidation \
             --distribution-id E284ON0A27O2H6 \
@@ -122,6 +131,8 @@ jobs:
     if: needs.detect-changes.outputs.portal == 'true'
     runs-on: ubuntu-latest
     environment: production
+    env:
+      AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN }}
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
@@ -135,16 +146,23 @@ jobs:
       - name: Build portal
         run: bun run build:portal
 
+      - name: Skip deploy (missing AWS role)
+        if: env.AWS_ROLE_ARN == ''
+        run: echo "::warning::AWS_ROLE_ARN is not set; skipping portal deploy."
+
       - name: Configure AWS credentials
+        if: env.AWS_ROLE_ARN != ''
         uses: aws-actions/configure-aws-credentials@8df5847569e6427dd6c4fb1cf565c83acfa8afa7 # v6.0.0
         with:
-          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          role-to-assume: ${{ env.AWS_ROLE_ARN }}
           aws-region: us-east-1
 
       - name: Deploy to S3
+        if: env.AWS_ROLE_ARN != ''
         run: aws s3 sync apps/portal/dist/ s3://plannotator-portal/ --delete
 
       - name: Invalidate CloudFront
+        if: env.AWS_ROLE_ARN != ''
         run: |
           aws cloudfront create-invalidation \
             --distribution-id EP0KB9EFUWYXR \
