@@ -19,7 +19,7 @@ describe("pr-provider platform helpers", () => {
       platform: "github",
       host: "github.com",
       owner: "kingkillery",
-      repo: "plannotator",
+      repo: "pk-plannotator",
       number: 364,
     });
   });
@@ -80,7 +80,7 @@ describe("pr-provider platform helpers", () => {
       platform: "github",
       host: "github.com",
       owner: "kingkillery",
-      repo: "plannotator",
+      repo: "pk-plannotator",
       number: 364,
       title: "GitHub PR",
       author: "kingkillery",
@@ -121,7 +121,7 @@ describe("pr-provider platform helpers", () => {
       platform: "github",
       host: "github.com",
       owner: "kingkillery",
-      repo: "plannotator",
+      repo: "pk-plannotator",
       number: 1,
       title: "GitHub PR",
       author: "kingkillery",
@@ -153,7 +153,7 @@ describe("pr-provider platform helpers", () => {
       platform: "github",
       host: "github.com",
       owner: "kingkillery",
-      repo: "plannotator",
+      repo: "pk-plannotator",
       number: 1,
     });
     expect(gitlabRef).toEqual({

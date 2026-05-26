@@ -60,7 +60,7 @@ async function runScenario(setup: {
     `,
     ],
     {
-      env: { ...process.env, HOME: TEST_HOME },
+      env: { ...process.env, HOME: TEST_HOME, USERPROFILE: TEST_HOME },
       cwd: join(import.meta.dir, "../.."),
       stdout: "pipe",
       stderr: "pipe",
@@ -89,7 +89,7 @@ describe("readImprovementHook", () => {
     });
     expect(result).not.toBeNull();
     expect(result!.content).toBe("Focus on error handling");
-    expect(result!.filePath).toContain(".plannotator/hooks/compound/");
+    expect(result!.filePath.replace(/\\/g, "/")).toContain(".plannotator/hooks/compound/");
   });
 
   test("new path wins over legacy path", async () => {
@@ -99,7 +99,7 @@ describe("readImprovementHook", () => {
     });
     expect(result).not.toBeNull();
     expect(result!.content).toBe("New instructions");
-    expect(result!.filePath).toContain(".plannotator/hooks/compound/");
+    expect(result!.filePath.replace(/\\/g, "/")).toContain(".plannotator/hooks/compound/");
   });
 
   test("falls back to legacy path when new path is absent", async () => {
@@ -108,8 +108,8 @@ describe("readImprovementHook", () => {
     });
     expect(result).not.toBeNull();
     expect(result!.content).toBe("Legacy instructions");
-    expect(result!.filePath).toContain(".plannotator/compound/");
-    expect(result!.filePath).not.toContain(".plannotator/hooks/");
+    expect(result!.filePath.replace(/\\/g, "/")).toContain(".plannotator/compound/");
+    expect(result!.filePath.replace(/\\/g, "/")).not.toContain(".plannotator/hooks/");
   });
 
   test("returns null when new path exists but is empty (no legacy fallback)", async () => {
