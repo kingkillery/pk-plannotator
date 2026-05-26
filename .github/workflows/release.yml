@@ -171,7 +171,11 @@ jobs:
         run: |
           bun pm pack
           if [[ "$DRY_RUN" == "false" ]]; then
-            npm publish *.tgz --provenance --access public
+            if grep -q '"version": ".*-.*"' package.json; then
+              npm publish *.tgz --provenance --access public --tag next
+            else
+              npm publish *.tgz --provenance --access public
+            fi
           fi
 
       - name: Publish @plannotator/pi-extension
@@ -181,5 +185,9 @@ jobs:
         run: |
           bun pm pack
           if [[ "$DRY_RUN" == "false" ]]; then
-            npm publish *.tgz --provenance --access public
+            if grep -q '"version": ".*-.*"' package.json; then
+              npm publish *.tgz --provenance --access public --tag next
+            else
+              npm publish *.tgz --provenance --access public
+            fi
           fi
