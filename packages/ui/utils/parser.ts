@@ -70,6 +70,30 @@ export function extractFrontmatter(markdown: string): { frontmatter: Frontmatter
  */
 export const parseMarkdownToBlocks = (markdown: string): Block[] => {
   const { content: cleanMarkdown } = extractFrontmatter(markdown);
+
+  // Detect if the content is primarily HTML/CSS
+  const trimmed = cleanMarkdown.trim();
+  const isHtml = trimmed.startsWith('<') && (
+    trimmed.startsWith('<!DOCTYPE') ||
+    trimmed.startsWith('<html') ||
+    trimmed.startsWith('<div') ||
+    trimmed.startsWith('<style') ||
+    trimmed.startsWith('<section') ||
+    trimmed.startsWith('<header') ||
+    trimmed.startsWith('<article') ||
+    trimmed.startsWith('<main')
+  );
+
+  if (isHtml) {
+    return [{
+      id: 'block-0',
+      type: 'html',
+      content: cleanMarkdown,
+      order: 1,
+      startLine: 1
+    }];
+  }
+
   const lines = cleanMarkdown.split('\n');
   const blocks: Block[] = [];
   let currentId = 0;

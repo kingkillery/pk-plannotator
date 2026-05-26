@@ -982,6 +982,15 @@ const BlockRenderer: React.FC<{
   checkboxOverrides?: Map<string, boolean>;
 }> = ({ block, onOpenLinkedDoc, imageBaseDir, onImageClick, onToggleCheckbox, checkboxOverrides }) => {
   switch (block.type) {
+    case 'html':
+      return (
+        <div
+          className="html-render-container w-full"
+          data-block-id={block.id}
+          dangerouslySetInnerHTML={{ __html: block.content }}
+        />
+      );
+
     case 'heading':
       const Tag = `h${block.level || 1}` as React.ElementType;
       const styles = {

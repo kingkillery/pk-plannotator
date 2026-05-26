@@ -421,6 +421,14 @@ const MarkdownChunk: React.FC<{ content: string }> = ({ content }) => {
 
 const SimpleBlockRenderer: React.FC<{ block: Block }> = ({ block }) => {
   switch (block.type) {
+    case 'html':
+      return (
+        <div
+          className="html-render-container w-full"
+          dangerouslySetInnerHTML={{ __html: block.content }}
+        />
+      );
+
     case "heading": {
       const Tag = `h${block.level || 1}` as keyof React.JSX.IntrinsicElements;
       const styles =

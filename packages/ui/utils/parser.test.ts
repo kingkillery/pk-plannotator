@@ -208,3 +208,14 @@ describe("parseMarkdownToBlocks — real-world plan regression", () => {
     expect(blocks[5].type).toBe("heading");
   });
 });
+
+describe("parseMarkdownToBlocks — html detection", () => {
+  test("pure html document is parsed as a single html block", () => {
+    const html = `<style>\n:root { --background: oklch(0.97 0.005 260); }\n</style>\n<div class="container">\n  <header>Implementation plan</header>\n</div>`;
+    const blocks = parseMarkdownToBlocks(html);
+    expect(blocks).toHaveLength(1);
+    expect(blocks[0].type).toBe("html");
+    expect(blocks[0].content).toBe(html);
+  });
+});
+
