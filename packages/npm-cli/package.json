@@ -1,6 +1,6 @@
 {
   "name": "pk-plannotator",
-  "version": "0.19.22-pk.1",
+  "version": "0.19.22-pk.2",
   "description": "Private pk build of Plannotator CLI with plan.artificialgarden.org sharing defaults",
   "license": "MIT OR Apache-2.0",
   "author": "kingkillery",
