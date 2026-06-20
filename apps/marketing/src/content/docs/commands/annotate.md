@@ -6,7 +6,7 @@ sidebar:
 section: "Commands"
 ---
 
-The `/plannotator-annotate` command opens any markdown file in the Plannotator annotation UI.
+The `/plannotator-annotate` command opens any markdown file, demo notes, generated report, spec, or agent artifact in the Plannotator annotation UI.
 
 ## Usage
 
@@ -16,7 +16,7 @@ The `/plannotator-annotate` command opens any markdown file in the Plannotator a
 /plannotator-annotate path/to/file.md
 ```
 
-The agent runs `plannotator annotate <file>` under the hood. The annotation UI opens in the browser. When you submit, feedback is returned to the agent as structured output.
+The agent runs `plannotator annotate <file>` under the hood. The annotation UI opens in Glimpse when enabled or in the browser fallback. When you submit, feedback is returned to the agent as structured output.
 
 ### Standalone CLI (outside an agent session)
 
@@ -24,7 +24,7 @@ The agent runs `plannotator annotate <file>` under the hood. The annotation UI o
 plannotator annotate path/to/file.md
 ```
 
-This starts a local server, opens the browser, and blocks until you submit. The formatted feedback is printed to stdout.
+This starts a local server, opens Glimpse when enabled or a browser fallback, and blocks until you submit. The formatted feedback is printed to stdout.
 
 ## How it works
 
@@ -35,7 +35,7 @@ CLI reads README.md from disk
         ↓
 Annotate server starts (random port)
         ↓
-Browser opens, loads annotation UI
+Glimpse or browser opens, loads annotation UI
         ↓
 /api/plan returns { plan: markdown, mode: "annotate" }
         ↓
@@ -56,6 +56,8 @@ The annotation UI in annotate mode works the same as plan review, with a few cha
 - The completion screen says "Annotations Sent" instead of "Plan Approved"
 
 All annotation types work identically — deletions, replacements, comments, insertions, global comments, and image attachments.
+
+Use annotate mode for artifacts that should stay inside the human-in-the-loop review path: demos, generated markdown, specs, release notes, implementation notes, reports, and other reviewable outputs.
 
 ## Feedback format
 

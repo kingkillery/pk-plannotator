@@ -8,6 +8,7 @@
 
 import { mkdirSync } from "fs";
 import { openBrowser } from "./browser";
+import { openGlimpseWindow } from "./glimpse";
 import { validateImagePath, validateUploadExtension, UPLOAD_DIR } from "./image";
 import { saveDraft, loadDraft, deleteDraft } from "./draft";
 import { FAVICON_SVG } from "@plannotator/shared/favicon";
@@ -135,11 +136,19 @@ export function handleFavicon(): Response {
   });
 }
 
-/** Open browser for local sessions or when a custom handler (e.g. VS Code extension) is configured. */
+/** Open Glimpse native window when available, otherwise fall back to the configured browser. */
 export async function handleServerReady(
   url: string,
   isRemote: boolean,
   _port: number,
 ): Promise<void> {
+  if (!isRemote) {
+    const glimpse = await openGlimpseWindow({
+      serverUrl: url,
+      title: "Plannotator",
+    });
+    if (glimpse) return;
+  }
+
   await openBrowser(url);
 }

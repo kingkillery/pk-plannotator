@@ -1,4 +1,4 @@
-const PK_PLANNOTATOR_VERSION = "0.19.22-pk.1";
+const PK_PLANNOTATOR_VERSION = "0.19.22-pk.2";
 
 export function isTopLevelHelpInvocation(args: string[]): boolean {
   return args[0] === "--help" || args[0] === "-h";
@@ -24,13 +24,18 @@ export function formatTopLevelHelp(): string {
     "Usage:",
     "  plannotator --help",
     "  plannotator --version",
-    "  plannotator [--browser <name>]",
+    "  plannotator [--browser <name>] [--glimpse|--no-glimpse]",
     "  plannotator review [PR_URL]",
     "  plannotator annotate <file.md | folder/>",
     "  plannotator last",
     "  plannotator archive",
     "  plannotator sessions",
     "  plannotator improve-context",
+    "",
+    "Global flags:",
+    "  --browser <name>   Override which browser to open",
+    "  --glimpse          Force native Glimpse window mode",
+    "  --no-glimpse       Disable Glimpse and use browser mode",
     "",
     "Note:",
     "  this pk build defaults remote share links to https://plan.artificialgarden.org",

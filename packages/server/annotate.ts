@@ -21,6 +21,7 @@ import { createExternalAnnotationHandler } from "./external-annotations";
 import { saveConfig, detectGitUser, getServerConfig } from "./config";
 import { dirname } from "path";
 import { isWSL } from "./browser";
+import { injectGlimpseBridge } from "./glimpse";
 
 // Re-export utilities
 export { isRemoteSession, getServerPort } from "./remote";
@@ -103,6 +104,7 @@ export async function startAnnotateServer(
   const gitUser = detectGitUser();
   const draftKey = contentHash(markdown);
   const externalAnnotations = createExternalAnnotationHandler("plan");
+  const servedHtml = injectGlimpseBridge(htmlContent);
 
   // Detect repo info (cached for this session)
   const repoInfo = await getRepoInfo();
@@ -228,7 +230,7 @@ export async function startAnnotateServer(
           if (url.pathname === "/favicon.svg") return handleFavicon();
 
           // Serve embedded HTML for all other routes (SPA)
-          return new Response(htmlContent, {
+          return new Response(servedHtml, {
             headers: { "Content-Type": "text/html" },
           });
         },

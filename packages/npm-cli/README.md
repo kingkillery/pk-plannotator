@@ -10,9 +10,17 @@ plannotator --version
 pk-plannotator --version
 ```
 
-Both commands should print `pk-plannotator 0.19.22-pk.1`.
+Both commands should print `pk-plannotator 0.19.22-pk.2`.
 
 This package installs both `plannotator` and `pk-plannotator` command aliases. It runs the same Bun-targeted bundle hosted by `https://plan.artificialgarden.org` and requires Bun to be installed.
+
+Glimpse native-window mode is installed as an optional dependency. Enable it with:
+
+```sh
+PLANNOTATOR_GLIMPSE=1 plannotator review
+```
+
+If Glimpse cannot start on the current machine, Plannotator falls back to browser mode.
 
 For Claude Code, install the plugin after the CLI:
 
