@@ -14,7 +14,7 @@ Both commands should print `pk-plannotator 0.19.22-pk.2`.
 
 This package installs both `plannotator` and `pk-plannotator` command aliases. It runs the same Bun-targeted bundle hosted by `https://plan.artificialgarden.org` and requires Bun to be installed.
 
-Glimpse native-window mode is installed as an optional dependency. Enable it with:
+Glimpse native-window mode is installed as an optional dependency. It opens an always-on-top review window. Enable it with:
 
 ```sh
 PLANNOTATOR_GLIMPSE=1 plannotator review

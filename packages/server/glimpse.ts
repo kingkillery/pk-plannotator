@@ -12,6 +12,9 @@
  *   unset                       → auto-detect (try Glimpse, fall back to browser)
  *
  * Glimpse is always disabled for remote/devcontainer sessions.
+ * Glimpse windows are intentionally always-on-top while open. Users should
+ * close them, use them later, or minimize them rather than letting them hide
+ * behind editor/browser windows.
  */
 
 import { isRemoteSession } from "./remote";
@@ -27,8 +30,6 @@ export interface GlimpseWindowOptions {
   width?: number;
   /** Window height (default: 740) */
   height?: number;
-  /** Always on top (default: true for artifact-style persistence) */
-  floating?: boolean;
   /** Called when window sends a message via glimpse.send() */
   onMessage?: (data: GlimpseMessage) => void;
   /** Called when window is closed */
@@ -232,7 +233,7 @@ export async function openGlimpseWindow(
       width: options.width ?? 960,
       height: options.height ?? 740,
       title: options.title ?? "Plannotator",
-      floating: options.floating ?? true,
+      floating: true,
     });
 
     win.on("message", (data: unknown) => {

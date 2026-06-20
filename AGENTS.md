@@ -101,7 +101,7 @@ claude --plugin-dir ./apps/hook
 | `PLANNOTATOR_REMOTE` | Set to `1` or `true` for remote mode (devcontainer, SSH). Uses fixed port and skips browser open. |
 | `PLANNOTATOR_PORT` | Fixed port to use. Default: random locally, `19432` for remote sessions. |
 | `PLANNOTATOR_BROWSER` | Custom browser to open plans in. macOS: app name or path. Linux/Windows: executable path. |
-| `PLANNOTATOR_GLIMPSE` | Set to `1` to use native Glimpse window instead of browser. Set to `0` to disable. Default: auto-detect (use Glimpse if available). |
+| `PLANNOTATOR_GLIMPSE` | Set to `1` to use the always-on-top native Glimpse window instead of browser. Set to `0` to disable. Default: auto-detect (use Glimpse if available). |
 | `PLANNOTATOR_SHARE` | Set to `disabled` to turn off URL sharing entirely. Default: enabled. |
 | `PLANNOTATOR_SHARE_URL` | Custom base URL for share links (self-hosted portal). Default: `https://plan.artificialgarden.org`. |
 | `PLANNOTATOR_PASTE_URL` | Base URL of the paste service API for short URL sharing. Default: unset, which disables short-link upload and uses hash-only sharing. |
@@ -123,7 +123,7 @@ PermissionRequest hook fires
         ↓
 Bun server reads plan from stdin JSON (tool_input.plan)
         ↓
-Server starts on random port, opens Glimpse native window when available (browser fallback)
+Server starts on random port, opens always-on-top Glimpse native window when available (browser fallback)
         ↓
 User reviews plan, optionally adds annotations
         ↓
@@ -141,7 +141,7 @@ OpenCode: event handler intercepts command
         ↓
 git diff captures unstaged changes
         ↓
-Review server starts, opens Glimpse native window when available (browser fallback) with diff viewer
+Review server starts, opens always-on-top Glimpse native window when available (browser fallback) with diff viewer
         ↓
 User annotates code, provides feedback
         ↓
@@ -159,7 +159,7 @@ OpenCode: event handler intercepts command
         ↓
 Markdown file read from disk
         ↓
-Annotate server starts, opens Glimpse native window when available (browser fallback)
+Annotate server starts, opens always-on-top Glimpse native window when available (browser fallback)
         ↓
 User annotates markdown, provides feedback
         ↓
@@ -173,7 +173,7 @@ User runs plannotator archive (CLI) or /plannotator-archive (Pi)
         ↓
 Server starts in mode:"archive", reads ~/.plannotator/plans/
         ↓
-Glimpse native window or browser opens read-only archive viewer (sharing disabled)
+Always-on-top Glimpse native window or browser opens read-only archive viewer (sharing disabled)
         ↓
 User browses saved plan decisions with approved/denied badges
         ↓

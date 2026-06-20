@@ -15,7 +15,7 @@ All Plannotator environment variables and their defaults.
 | `PLANNOTATOR_REMOTE` | auto-detect | Set to `1` or `true` to force remote mode. Uses fixed port and skips browser auto-open. |
 | `PLANNOTATOR_PORT` | random (local) / `19432` (remote) | Fixed server port. When not set, local sessions use a random port; remote sessions default to `19432`. |
 | `PLANNOTATOR_BROWSER` | system default | Custom browser to open the UI in. macOS: app name or path. Linux/Windows: executable path. Can also be a script. Takes priority over `BROWSER`. Also settable per-invocation with `--browser`. |
-| `PLANNOTATOR_GLIMPSE` | auto-detect | Set to `1` to force Glimpse native-window mode. Set to `0` to force browser mode. Also settable per-invocation with `--glimpse` / `--no-glimpse`. |
+| `PLANNOTATOR_GLIMPSE` | auto-detect | Set to `1` to force always-on-top Glimpse native-window mode. Set to `0` to force browser mode. Also settable per-invocation with `--glimpse` / `--no-glimpse`. |
 | `BROWSER` | (none) | Standard env var for specifying a browser. VS Code sets this automatically in devcontainers. Used as fallback when `PLANNOTATOR_BROWSER` is not set. |
 | `PLANNOTATOR_SHARE` | enabled | Set to `disabled` to turn off sharing. Hides share UI and import options. |
 | `PLANNOTATOR_SHARE_URL` | `https://plan.artificialgarden.org` | Base URL for share links. Set this when self-hosting the share portal. |

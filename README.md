@@ -120,7 +120,7 @@ Plannotator lets you privately share plans, annotations, and feedback with colle
 
 #### Native Window Mode (Glimpse)
 
-Plannotator can display the review UI in a native window instead of a browser tab using [Glimpse](https://github.com/HazAT/glimpse). This provides a more integrated experience without browser chrome.
+Plannotator can display the review UI in a native always-on-top window instead of a browser tab using [Glimpse](https://github.com/HazAT/glimpse). This keeps the human-in-the-loop review artifact visible while the agent works.
 
 **Requirements:**
 - macOS: Xcode Command Line Tools
@@ -145,7 +145,7 @@ Or pass the flag when invoking plannotator:
 plannotator review --glimpse
 ```
 
-The review UI will open in a native window. All features work the same as the browser version.
+The review UI opens in an always-on-top native window. Close it when done, keep it open for later, or minimize it if it is in the way; it is intentionally not allowed to hide behind other windows. All features work the same as the browser version.
 
 **Disable Glimpse:**
 

@@ -16,7 +16,7 @@ The `/plannotator-annotate` command opens any markdown file, demo notes, generat
 /plannotator-annotate path/to/file.md
 ```
 
-The agent runs `plannotator annotate <file>` under the hood. The annotation UI opens in Glimpse when enabled or in the browser fallback. When you submit, feedback is returned to the agent as structured output.
+The agent runs `plannotator annotate <file>` under the hood. The annotation UI opens in always-on-top Glimpse when enabled or in the browser fallback. When you submit, feedback is returned to the agent as structured output.
 
 ### Standalone CLI (outside an agent session)
 
@@ -24,7 +24,7 @@ The agent runs `plannotator annotate <file>` under the hood. The annotation UI o
 plannotator annotate path/to/file.md
 ```
 
-This starts a local server, opens Glimpse when enabled or a browser fallback, and blocks until you submit. The formatted feedback is printed to stdout.
+This starts a local server, opens always-on-top Glimpse when enabled or a browser fallback, and blocks until you submit. The formatted feedback is printed to stdout.
 
 ## How it works
 
@@ -35,7 +35,7 @@ CLI reads README.md from disk
         ↓
 Annotate server starts (random port)
         ↓
-Glimpse or browser opens, loads annotation UI
+Always-on-top Glimpse or browser opens, loads annotation UI
         ↓
 /api/plan returns { plan: markdown, mode: "annotate" }
         ↓
