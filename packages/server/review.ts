@@ -22,6 +22,7 @@ import { saveConfig, detectGitUser, getServerConfig } from "./config";
 import { type PRMetadata, type PRReviewFileComment, fetchPRFileContent, fetchPRContext, submitPRReview, fetchPRViewedFiles, markPRFilesViewed, getPRUser, prRefFromMetadata, getDisplayRepo, getMRLabel, getMRNumberLabel } from "./pr";
 import { createAIEndpoints, ProviderRegistry, SessionManager, createProvider, type AIEndpoints, type PiSDKConfig } from "@plannotator/ai";
 import { isWSL } from "./browser";
+import { injectGlimpseBridge } from "./glimpse";
 
 // Re-export utilities
 export { isRemoteSession, getServerPort } from "./remote";
@@ -94,6 +95,7 @@ export async function startReviewServer(
   options: ReviewServerOptions
 ): Promise<ReviewServerResult> {
   const { htmlContent, origin, gitContext, sharingEnabled = true, shareBaseUrl, onReady, prMetadata } = options;
+  const servedHtml = injectGlimpseBridge(htmlContent);
 
   const isPRMode = !!prMetadata;
   const draftKey = contentHash(options.rawPatch);
@@ -545,7 +547,7 @@ export async function startReviewServer(
           if (url.pathname === "/favicon.svg") return handleFavicon();
 
           // Serve embedded HTML for all other routes (SPA)
-          return new Response(htmlContent, {
+          return new Response(servedHtml, {
             headers: { "Content-Type": "text/html" },
           });
         },

@@ -45,6 +45,7 @@ import { handleDoc, handleObsidianVaults, handleObsidianFiles, handleObsidianDoc
 import { createEditorAnnotationHandler } from "./editor-annotations";
 import { createExternalAnnotationHandler } from "./external-annotations";
 import { isWSL } from "./browser";
+import { injectGlimpseBridge } from "./glimpse";
 
 // Re-export utilities
 export { isRemoteSession, getServerPort } from "./remote";
@@ -80,6 +81,7 @@ export interface ServerOptions {
   /** Custom plan save path — used by archive mode to find saved plans */
   customPlanPath?: string | null;
 }
+
 
 export interface ServerResult {
   /** The port the server is running on */
@@ -125,6 +127,8 @@ export async function startPlannotatorServer(
   const configuredPort = getServerPort();
   const wslFlag = await isWSL();
   const gitUser = detectGitUser();
+
+  const servedHtml = injectGlimpseBridge(htmlContent);
 
   // --- Archive mode setup ---
   let archivePlans: ArchivedPlan[] = [];
@@ -529,7 +533,7 @@ export async function startPlannotatorServer(
           if (url.pathname === "/favicon.svg") return handleFavicon();
 
           // Serve embedded HTML for all other routes (SPA)
-          return new Response(htmlContent, {
+          return new Response(servedHtml, {
             headers: { "Content-Type": "text/html" },
           });
         },
@@ -565,6 +569,7 @@ export async function startPlannotatorServer(
   if (onReady) {
     onReady(serverUrl, isRemote, port);
   }
+
 
   return {
     port,

@@ -2,7 +2,7 @@
 $ErrorActionPreference = "Stop"
 
 $installBaseUrl = "https://plan.artificialgarden.org"
-$latestTag = "0.19.22-pk.1"
+$latestTag = "0.19.22-pk.2"
 $skillsRepo = "kingkillery/pk-plannotator"
 $installDir = "$env:LOCALAPPDATA\plannotator"
 
@@ -68,6 +68,17 @@ $shim = "@echo off`r`nbun `"%~dp0pk-plannotator.js`" %*`r`n"
 Set-Content -Path $mainCmd -Value $shim -NoNewline -Encoding ASCII
 Set-Content -Path $aliasCmd -Value $shim -NoNewline -Encoding ASCII
 
+Write-Host "Installing Glimpse native-window dependency..."
+try {
+    Push-Location $installDir
+    bun add "glimpseui@0.8.1"
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "Warning: Glimpse dependency install failed; browser mode will still work."
+    }
+} finally {
+    Pop-Location -ErrorAction SilentlyContinue
+}
+
 Write-Host ""
 Write-Host "pk-plannotator $latestTag installed to $mainFile"
 Write-Host "plannotator and pk-plannotator resolve through command shims in $installDir"
@@ -114,7 +125,7 @@ Remove-Item -Recurse -Force "$env:USERPROFILE\.cache\opencode\node_modules\@plan
 Remove-Item -Recurse -Force "$env:USERPROFILE\.bun\install\cache\@plannotator" -ErrorAction SilentlyContinue
 
 # Clear Pi jiti cache to force fresh download on next run
-Remove-Item -Recurse -Force "$env:TEMP\jiti" -ErrorAction SilentlyContinue
+Remove-Item -Recurse -Force "$env:USERPROFILE\.cache\jiti" -ErrorAction SilentlyContinue
 
 # Update Pi extension if pi is installed
 if (Get-Command pi -ErrorAction SilentlyContinue) {
@@ -224,7 +235,7 @@ if (Get-Command git -ErrorAction SilentlyContinue) {
     New-Item -ItemType Directory -Force -Path $skillsTmp | Out-Null
 
     try {
-        git clone --depth 1 --filter=blob:none --sparse "https://github.com/$skillsRepo.git" "$skillsTmp\repo" 2>$null
+        git clone --depth 1 --filter=blob:none --sparse "https://github.com/$skillsRepo.git" --branch $latestTag "$skillsTmp\repo" 2>$null
         Push-Location "$skillsTmp\repo"
         git sparse-checkout set apps/skills 2>$null
 
@@ -272,15 +283,21 @@ priority = 100
         if ($content -notmatch '"plannotator"') {
             # Merge hook into existing settings.json using node (ships with Gemini CLI)
             if (Get-Command node -ErrorAction SilentlyContinue) {
-                $mergeScript = @"
+                $env:GEMINI_SETTINGS_PATH = $geminiSettings
+                $env:PLANNOTATOR_HOOK_JSON = '{"matcher":"exit_plan_mode","hooks":[{"type":"command","command":"plannotator","timeout":345600}]}'
+                $mergeScript = @'
 const fs = require('fs');
-const settings = JSON.parse(fs.readFileSync('$($geminiSettings.Replace('\','/'))', 'utf8'));
+const settingsPath = process.env.GEMINI_SETTINGS_PATH;
+const hook = JSON.parse(process.env.PLANNOTATOR_HOOK_JSON);
+const settings = JSON.parse(fs.readFileSync(settingsPath, 'utf8'));
 if (!settings.hooks) settings.hooks = {};
 if (!settings.hooks.BeforeTool) settings.hooks.BeforeTool = [];
-settings.hooks.BeforeTool.push({"matcher":"exit_plan_mode","hooks":[{"type":"command","command":"plannotator","timeout":345600}]});
-fs.writeFileSync('$($geminiSettings.Replace('\','/'))', JSON.stringify(settings, null, 2) + '\n');
-"@
+settings.hooks.BeforeTool.push(hook);
+fs.writeFileSync(settingsPath, JSON.stringify(settings, null, 2) + '\n');
+'@
                 node -e $mergeScript
+                Remove-Item Env:\GEMINI_SETTINGS_PATH -ErrorAction SilentlyContinue
+                Remove-Item Env:\PLANNOTATOR_HOOK_JSON -ErrorAction SilentlyContinue
                 Write-Host "Added plannotator hook to $geminiSettings"
             } else {
                 Write-Host ""
@@ -380,6 +397,9 @@ Write-Host "  /plugin marketplace add kingkillery/pk-plannotator"
 Write-Host "  /plugin install plannotator@plannotator"
 Write-Host ""
 Write-Host "The /plannotator-review, /plannotator-annotate, and /plannotator-last commands are ready to use after you restart Claude Code!"
+Write-Host ""
+Write-Host "Optional native window mode:"
+Write-Host '  $env:PLANNOTATOR_GLIMPSE = "1"   # open Plannotator in a Glimpse native window when available'
 
 # Warn if plannotator is configured in both settings.json hooks AND the plugin (causes double execution)
 # Only warn when the plugin is installed — manual-only users won't have overlap

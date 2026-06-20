@@ -8,7 +8,8 @@ set "VERSION=%~1"
 if "!VERSION!"=="" set "VERSION=latest"
 
 set "INSTALL_BASE_URL=https://plan.artificialgarden.org"
-set "TAG=0.19.22-pk.1"
+set "TAG=0.19.22-pk.2"
+set "REPO=kingkillery/pk-plannotator"
 set "INSTALL_DIR=%USERPROFILE%\.local\bin"
 set "PLATFORM=win32-x64"
 
@@ -92,6 +93,12 @@ echo @echo off
 echo bun "%%~dp0pk-plannotator.js" %%*
 ) > "!PK_CMD!"
 copy /y "!PK_CMD!" "!INSTALL_PATH!" >nul
+
+echo Installing Glimpse native-window dependency...
+pushd "!INSTALL_DIR!"
+bun add "glimpseui@0.8.1"
+if !ERRORLEVEL! neq 0 echo Warning: Glimpse dependency install failed; browser mode will still work.
+popd
 
 echo.
 echo pk-plannotator !TAG! installed to !MAIN_PATH!
@@ -347,6 +354,9 @@ echo   /plugin marketplace add kingkillery/pk-plannotator
 echo   /plugin install plannotator@plannotator
 echo.
 echo The /plannotator-review, /plannotator-annotate, and /plannotator-last commands are ready to use!
+echo.
+echo Optional native window mode:
+echo   set PLANNOTATOR_GLIMPSE=1   # open Plannotator in a Glimpse native window when available
 
 REM Warn if plannotator is configured in both settings.json hooks AND the plugin (causes double execution)
 REM Only warn when the plugin is installed — manual-only users won't have overlap

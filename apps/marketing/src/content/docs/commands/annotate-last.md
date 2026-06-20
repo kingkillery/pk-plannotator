@@ -43,7 +43,7 @@ Last assistant message extracted from session
         ↓
 Annotate server starts (random port)
         ↓
-Browser opens, loads annotation UI
+Always-on-top Glimpse or browser opens, loads annotation UI
         ↓
 /api/plan returns { plan: message, mode: "annotate-last" }
         ↓

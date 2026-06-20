@@ -16,10 +16,18 @@ Use npm if you already have Node and Bun installed:
 npm install -g pk-plannotator
 ```
 
-Or use the hosted installer:
+Or use the public Cloudflare installer:
 
 ```bash
-curl -fsSL https://plan.artificialgarden.org/install.sh | bash
+curl -fsSL https://pk-planner.pkking.computer/install.sh | bash
+```
+
+The public installer is served from Cloudflare Pages and is the canonical macOS / Linux / WSL install URL.
+
+Maintainers can deploy that installer without GitHub Actions billing by using Wrangler OAuth locally:
+
+```bash
+bun run deploy:install
 ```
 
 Windows PowerShell:
@@ -37,7 +45,7 @@ pk-plannotator --version
 plannotator --version
 ```
 
-Both should print `pk-plannotator 0.19.22-pk.1`.
+Both should print `pk-plannotator 0.19.22-pk.2`.
 
 ### 3. Add the Claude Code plugin
 
@@ -94,7 +102,10 @@ Share links are hash-only by default for small plans. Large-plan upload is disab
 <tr><td><strong>Code Review</strong></td><td><code>/plannotator-review</code></td><td>View git diffs or remote PRs. Package annotations and ask AI about the code as you review.</td></tr>
 <tr><td><strong>Annotate Any File</strong></td><td><code>/plannotator-annotate</code></td><td>Annotate any markdown file and send feedback to your agent</td></tr>
 <tr><td><strong>Annotate Last Message</strong></td><td><code>/plannotator-last</code></td><td>Annotate the agent's last response and send structured feedback</td></tr>
+<tr><td><strong>Demo & Artifact Review</strong></td><td><code>plannotator annotate</code></td><td>Open demos, generated markdown, specs, reports, or agent artifacts in the same human-in-the-loop annotation flow</td></tr>
 </table>
+
+Plannotator deploys as both a planning gate and an artifact review surface. The default hook reviews agent plans before work starts; `/plannotator-review`, `/plannotator-annotate`, and `/plannotator-last` reuse the same feedback loop for demos, diffs, generated documents, and other reviewable artifacts after or during the work.
 
 #### Sharing Plans
 
@@ -106,6 +117,43 @@ Plannotator lets you privately share plans, annotations, and feedback with colle
 
 - Zero-knowledge storage, similar to [PrivateBin](https://privatebin.info/)
 - Fully open source and **self-hostable** ([see docs](apps/marketing/src/content/docs/guides/sharing-and-collaboration.md))
+
+#### Native Window Mode (Glimpse)
+
+Plannotator can display the review UI in a native always-on-top window instead of a browser tab using [Glimpse](https://github.com/HazAT/glimpse). This keeps the human-in-the-loop review artifact visible while the agent works.
+
+**Requirements:**
+- macOS: Xcode Command Line Tools
+- Linux: GTK4 and WebKitGTK development packages
+- Windows: WebView2 Runtime (pre-installed on Windows 10/11)
+
+**Installation:**
+
+When you install pk-plannotator via npm, Glimpse is included as an optional dependency and will be built automatically during installation.
+
+**Usage:**
+
+Set the environment variable to enable Glimpse:
+
+```bash
+export PLANNOTATOR_GLIMPSE=1
+```
+
+Or pass the flag when invoking plannotator:
+
+```bash
+plannotator review --glimpse
+```
+
+The review UI opens in an always-on-top native window. Close it when done, keep it open for later, or minimize it if it is in the way; it is intentionally not allowed to hide behind other windows. All features work the same as the browser version.
+
+**Disable Glimpse:**
+
+```bash
+export PLANNOTATOR_GLIMPSE=0
+```
+
+Or omit the `--glimpse` flag to use the default browser.
 
 ## Install
 
@@ -123,7 +171,7 @@ Plannotator lets you privately share plans, annotations, and feedback with colle
 **macOS / Linux / WSL:**
 
 ```bash
-curl -fsSL https://plan.artificialgarden.org/install.sh | bash
+curl -fsSL https://pk-planner.pkking.computer/install.sh | bash
 ```
 
 **Windows PowerShell:**
@@ -152,7 +200,7 @@ See [apps/hook/README.md](apps/hook/README.md) for detailed installation instruc
 **macOS / Linux / WSL:**
 
 ```bash
-curl -fsSL https://plan.artificialgarden.org/install.sh | bash
+curl -fsSL https://pk-planner.pkking.computer/install.sh | bash
 ```
 
 **Windows PowerShell:**
@@ -181,7 +229,7 @@ See [apps/copilot/README.md](apps/copilot/README.md) for details.
 **macOS / Linux / WSL:**
 
 ```bash
-curl -fsSL https://plan.artificialgarden.org/install.sh | bash
+curl -fsSL https://pk-planner.pkking.computer/install.sh | bash
 ```
 
 **Windows PowerShell:**
@@ -220,7 +268,7 @@ Add to your `opencode.json`:
 **Run the install script** to get `/plannotator-review`:
 
 ```bash
-curl -fsSL https://plan.artificialgarden.org/install.sh | bash
+curl -fsSL https://pk-planner.pkking.computer/install.sh | bash
 ```
 
 **Windows:**
@@ -251,7 +299,7 @@ See [apps/pi-extension/README.md](apps/pi-extension/README.md) for full usage de
 **macOS / Linux / WSL:**
 
 ```bash
-curl -fsSL https://plan.artificialgarden.org/install.sh | bash
+curl -fsSL https://pk-planner.pkking.computer/install.sh | bash
 ```
 
 **Windows PowerShell:**

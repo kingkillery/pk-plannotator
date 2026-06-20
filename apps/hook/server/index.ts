@@ -45,10 +45,13 @@
  * Global flags:
  *   --help             - Show top-level usage information
  *   --browser <name>   - Override which browser to open (e.g. "Google Chrome")
+ *   --glimpse          - Force native Glimpse window mode
+ *   --no-glimpse       - Disable Glimpse and use browser mode
  *
  * Environment variables:
- *   PLANNOTATOR_REMOTE - Set to "1" or "true" for remote mode (preferred)
- *   PLANNOTATOR_PORT   - Fixed port to use (default: random locally, 19432 for remote)
+ *   PLANNOTATOR_REMOTE  - Set to "1" or "true" for remote mode (preferred)
+ *   PLANNOTATOR_PORT    - Fixed port to use (default: random locally, 19432 for remote)
+ *   PLANNOTATOR_GLIMPSE - Set to "1" to use Glimpse, "0" to force browser
  */
 
 import {
@@ -105,6 +108,18 @@ const browserIdx = args.indexOf("--browser");
 if (browserIdx !== -1 && args[browserIdx + 1]) {
   process.env.PLANNOTATOR_BROWSER = args[browserIdx + 1];
   args.splice(browserIdx, 2);
+}
+
+const glimpseIdx = args.indexOf("--glimpse");
+if (glimpseIdx !== -1) {
+  process.env.PLANNOTATOR_GLIMPSE = "1";
+  args.splice(glimpseIdx, 1);
+}
+
+const noGlimpseIdx = args.indexOf("--no-glimpse");
+if (noGlimpseIdx !== -1) {
+  process.env.PLANNOTATOR_GLIMPSE = "0";
+  args.splice(noGlimpseIdx, 1);
 }
 
 if (isTopLevelHelpInvocation(args)) {

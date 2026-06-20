@@ -15,7 +15,7 @@ Install the `plannotator` command so your agent can use it.
 **macOS / Linux / WSL:**
 
 ```bash
-curl -fsSL https://plan.artificialgarden.org/install.sh | bash
+curl -fsSL https://pk-planner.pkking.computer/install.sh | bash
 ```
 
 **Windows PowerShell:**
@@ -90,7 +90,7 @@ Restart OpenCode. The `submit_plan` tool is now available.
 For slash commands (`/plannotator-review`, `/plannotator-annotate`), also run the install script:
 
 ```bash
-curl -fsSL https://plan.artificialgarden.org/install.sh | bash
+curl -fsSL https://pk-planner.pkking.computer/install.sh | bash
 ```
 
 This also clears any cached plugin versions.

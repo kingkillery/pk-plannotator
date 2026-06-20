@@ -26,7 +26,8 @@
   ],
   "dependencies": {
     "@plannotator/shared": "workspace:*",
-    "@plannotator/ai": "workspace:*"
+    "@plannotator/ai": "workspace:*",
+    "glimpseui": "^0.8.1"
   },
   "peerDependencies": {
     "bun": ">=1.0.0"

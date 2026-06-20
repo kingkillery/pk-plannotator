@@ -15,6 +15,7 @@ Plannotator is configured through environment variables and hook/plugin configur
 | `PLANNOTATOR_REMOTE` | auto-detect | Set to `1` or `true` to force remote mode. Uses a fixed port and skips browser auto-open. |
 | `PLANNOTATOR_PORT` | random (local) / `19432` (remote) | Fixed server port. Useful for port forwarding in remote environments. |
 | `PLANNOTATOR_BROWSER` | system default | Custom browser or script to open the UI. |
+| `PLANNOTATOR_GLIMPSE` | auto-detect | Set to `1` to force always-on-top Glimpse native-window mode. Set to `0` to force browser mode. |
 | `PLANNOTATOR_SHARE` | enabled | Set to `disabled` to turn off URL sharing entirely. |
 | `PLANNOTATOR_SHARE_URL` | `https://plan.artificialgarden.org` | Point share links at a self-hosted portal. |
 | `CLAUDE_CONFIG_DIR` | `~/.claude` | Respected by the install script when placing hooks. |
@@ -87,6 +88,16 @@ For one-off overrides without changing your shell profile, use the `--browser` f
 ```bash
 plannotator review --browser "Safari"
 plannotator annotate plan.md --browser "Firefox"
+```
+
+## Native window mode
+
+Set `PLANNOTATOR_GLIMPSE=1` to open Plannotator in an always-on-top Glimpse native window when the optional dependency is installed. Use `--glimpse` or `--no-glimpse` for one-off overrides.
+
+```bash
+PLANNOTATOR_GLIMPSE=1 plannotator review
+plannotator review --glimpse
+plannotator review --no-glimpse
 ```
 
 ## Session discovery

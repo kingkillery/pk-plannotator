@@ -24,6 +24,7 @@
     "build:marketing": "bun run --cwd apps/marketing build",
     "build:opencode": "bun run --cwd apps/opencode-plugin build",
     "build:review": "bun run --cwd apps/review build",
+    "deploy:install": "bash scripts/deploy-install-pages.sh",
     "build:pi": "bun run build:review && bun run build:hook && bun run --cwd apps/pi-extension build",
     "build": "bun run build:hook && bun run build:opencode",
     "dev:vscode": "bun run --cwd apps/vscode-extension watch",
@@ -40,6 +41,7 @@
     "diff": "^8.0.3",
     "dockview-react": "^5.2.0",
     "dompurify": "^3.3.3",
+    "glimpseui": "^0.8.1",
     "marked": "^17.0.5"
   },
   "devDependencies": {

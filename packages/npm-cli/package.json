@@ -32,8 +32,11 @@
     "README.md"
   ],
   "scripts": {
-    "build:bundle": "bun build ../../apps/hook/server/index.ts --target=bun --outfile dist/pk-plannotator-bun.js",
+    "build:bundle": "bun build ../../apps/hook/server/index.ts --target=bun --external glimpseui --outfile dist/pk-plannotator-bun.js",
     "prepack": "bun run build:bundle"
+  },
+  "optionalDependencies": {
+    "glimpseui": "^0.8.1"
   },
   "engines": {
     "node": ">=18",
